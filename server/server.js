@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require('cors');
 const api = require('./controllers/api')
+const login = require('./controllers/login')
+
 
 const app = express();
 const port = 3000;
@@ -14,6 +16,10 @@ app.get("/", (req, res) => {
 
 app.get("/api", (req, res) => {
     api.handleApiCall(req, res)
+});
+
+app.post("/login", (req, res) => {
+    login.handleApiCall(req, res)
 });
 
 app.listen(port, () => {
