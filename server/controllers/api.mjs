@@ -1,15 +1,18 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
+import dotenv from "dotenv";
 
-const handleApiCall = async (req, res) => {
-    var myHeaders = new Headers();
-    myHeaders.append("apikey", "YSgf3tpbvgB42t4KIRWZN2VPjGHBkrVK");
+dotenv.config();
 
-    var requestOptions = {
+const api = async (req, res) => {
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", process.env.NEWS_API);
+
+    const requestOptions = {
         method: 'GET',
         redirect: 'follow',
         headers: myHeaders
     };
-    num = req.query.number || 5;
+    const num = req.query.number || 5;
     const url = `https://api.apilayer.com/world_news/search-news?text=India&number=${num}`;
 
     try {
@@ -20,9 +23,9 @@ const handleApiCall = async (req, res) => {
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).json({ error: 'Internal Server Error' });
+        return; // Add this line to exit the function after sending the error response
     }
 };
 
-module.exports = {
-    handleApiCall,
-};
+export default api;
+
