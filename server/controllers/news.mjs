@@ -43,7 +43,7 @@ const text = async (req, res) => {
         headers: myHeaders
     };
     const num = 5;
-    const url = `https://api.apilayer.com/world_news/search-news?text=${text}`;
+    const url = `https://api.apilayer.com/world_news/search-news?text=${text}&number=${num}`;
     console.log(url)
 
     try {
