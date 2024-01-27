@@ -1,21 +1,21 @@
 import db from "../db/conn.mjs"
 import bcrypt from "bcrypt"
 
-const POST = async (req, res) => {
+// const POST = async (req, res) => {
 
-    let { uname, name, email, password } = req.body;
+//     let { uname, name, email, password } = req.body;
 
-    const collection = db.collection("users");
+//     const collection = db.collection("users");
 
-    const existingUser = await collection.findOne({ uname });
+//     const existingUser = await collection.findOne({ uname });
 
-    if (existingUser) {
-        res.status(400).send("User already exists");
-    } else {
-        await collection.insertOne({ uid, sem1, sem2, cgpa });
-        res.status(201).send("User created");
-    }
-};
+//     if (existingUser) {
+//         res.status(400).send("User already exists");
+//     } else {
+//         await collection.insertOne({ uid, sem1, sem2, cgpa });
+//         res.status(201).send("User created");
+//     }
+// };
 
 const GET = async (req, res) => {
     const collection = db.collection("user_details");
@@ -45,7 +45,7 @@ const PATCH = async (req, res) => {
 const UPDATE = async (req, res) => {
 
     let uname = req.params.uname;
-    let { fname, lname, gender, age } = req.body;
+    let { fname, lname, gender, age, about } = req.body;
 
     const collection = db.collection("users");
 
@@ -61,6 +61,9 @@ const UPDATE = async (req, res) => {
     }
     if (!gender) {
         gender = existingUser.gender;
+    }
+    if (!about) {
+        about = existingUser.about;
     }
 
     if (!existingUser) {
