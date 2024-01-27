@@ -2,7 +2,7 @@ import db from "../db/conn.mjs";
 import bcrypt from 'bcrypt';
 
 const signup = async (req, res) => {
-    let { uname, name, email, password } = req.body;
+    let { uname, fname, lname, email, password } = req.body;
 
     const collection = db.collection("users");
 
@@ -19,7 +19,7 @@ const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Insert the new user with the hashed password
-        await collection.insertOne({ uname, name, email, password: hashedPassword });
+        await collection.insertOne({ uname, fname, lname, email, password: hashedPassword, gender: null, age: null });
 
         res.status(201).send("User created");
     } catch (error) {
