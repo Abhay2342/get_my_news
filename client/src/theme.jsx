@@ -2,6 +2,11 @@ import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   components: {
+    MuiIconButton: {
+      scroll: {
+        innerHeight: "22px",
+      },
+    },
     MuiButton: {
       styleOverrides: {
         link: {
@@ -49,6 +54,10 @@ const theme = createTheme({
     },
     secondary: {
       main: "#000000", // Change this to your secondary color
+    },
+
+    error: {
+      main: "#F24E1E",
     },
 
     background: {

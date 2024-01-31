@@ -68,7 +68,7 @@ const CountryCarousel = ({}) => {
         sx={{}}
       >
         <IconButton onClick={handlePrevPage} disabled={currentOffset === 0}>
-          <ArrowLeftIcon />
+          <ArrowLeftIcon sx={{ fontSize: "2rem" }} />
         </IconButton>
 
         <Paper
@@ -94,9 +94,10 @@ const CountryCarousel = ({}) => {
 
         <IconButton
           onClick={handleNextPage}
+          sx={{ fontSize: "2rem" }}
           disabled={currentOffset === totalItems - itemsPerPage}
         >
-          <ArrowRightIcon />
+          <ArrowRightIcon fontSize="2rem" />
         </IconButton>
       </Grid>
     </Grid>
