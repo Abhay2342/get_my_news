@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Grid, Typography, IconButton, Paper } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const itemsPerPage = 5;
 
@@ -68,7 +68,7 @@ const CountryCarousel = ({}) => {
         sx={{}}
       >
         <IconButton onClick={handlePrevPage} disabled={currentOffset === 0}>
-          <ArrowBackIcon />
+          <ArrowLeftIcon />
         </IconButton>
 
         <Paper
@@ -96,7 +96,7 @@ const CountryCarousel = ({}) => {
           onClick={handleNextPage}
           disabled={currentOffset === totalItems - itemsPerPage}
         >
-          <ArrowForwardIcon />
+          <ArrowRightIcon />
         </IconButton>
       </Grid>
     </Grid>

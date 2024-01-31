@@ -80,6 +80,12 @@ const theme = createTheme({
       fontSize: "1.2rem",
       color: "#3F3A3B",
     },
+    title: {
+      fontFamily: "Inika",
+      fontWeight: 700,
+      fontSize: "2.2rem",
+      color: "#3F3A3B",
+    },
   },
 });
 

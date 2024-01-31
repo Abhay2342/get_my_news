@@ -32,7 +32,7 @@ const Header = () => {
           <Select
             label="Language"
             variant="standard"
-            sx={{ border: "none" }}
+            sx={{ border: "none", margin: "6px 16px" }}
             value={selectedLanguage}
             onChange={handleLanguageChange}
           >
