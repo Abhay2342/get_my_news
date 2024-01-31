@@ -4,23 +4,28 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Badge from "@mui/material/Badge";
 import { Grid, Paper, Divider, Typography, IconButton } from "@mui/material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import img1 from "../assets/article1.png";
 import img2 from "../assets/article2.png";
 import img3 from "../assets/article3.png";
 
 const Body = () => {
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedCategory] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
 
-  const handleItemClick = (item, article) => {
-    setSelectedItem(item);
+  const handleCategoryClick = (item) => {
+    setSelectedCategory(item);
+    // setSelectedArticle(article);
+  };
+
+  const handleArticleClick = (article) => {
     setSelectedArticle(article);
   };
 
   useEffect(() => {
     // Set the default selected item to the first item
-    setSelectedItem("All");
+    setSelectedCategory("All");
     // Set the default selected article to the first article
     setSelectedArticle(newsArticles[0]);
   }, []);
@@ -42,7 +47,7 @@ const Body = () => {
     ];
 
     return items.map((item) => (
-      <ListItem key={item} onClick={() => handleItemClick(item)}>
+      <ListItem key={item} onClick={() => handleCategoryClick(item)}>
         <ListItemButton
           sx={{
             lineHeight: "0px",
@@ -92,7 +97,7 @@ const Body = () => {
       image:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
       heading: "Top Heading for Article 4",
-      date: "Date for Article 4",
+      date: "20-05-2022",
       description: "Small Description for Article 4",
     },
     {
@@ -122,7 +127,11 @@ const Body = () => {
   const renderNewsArticles = () => {
     return newsArticles.map((article, index) => (
       <React.Fragment key={index}>
-        <ListItem sx={{ alignItems: "flex-start" }}>
+        <ListItem
+          key={article}
+          sx={{ alignItems: "flex-start", cursor: "pointer" }}
+          onClick={() => handleArticleClick(article)}
+        >
           {/* Article Image */}
           <img
             src={article.image}
@@ -145,6 +154,7 @@ const Body = () => {
             </div>
 
             {/* Date */}
+
             <div
               style={{
                 fontFamily: "Lalezar",
@@ -198,7 +208,6 @@ const Body = () => {
           overflowY: "auto",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
         }}
       >
         {/* Article Image */}
@@ -213,14 +222,13 @@ const Body = () => {
         />
 
         {/* Article Details */}
-        <div style={{ width: "100%" }}>
+        <div style={{ cwidth: "100%" }}>
           {/* Date and Heart Icon */}
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: "10px",
             }}
           >
             {/* Date */}
@@ -236,13 +244,13 @@ const Body = () => {
 
             {/* Heart Icon */}
             <IconButton style={{ marginLeft: "auto" }}>
-              <FavoriteIcon color="error" />
+              <FavoriteBorderIcon />
             </IconButton>
           </div>
 
           {/* Article Title */}
           <Typography
-            variant="h5"
+            variant="title"
             style={{
               fontFamily: "Inika",
               fontWeight: 700,
@@ -267,8 +275,6 @@ const Body = () => {
       </div>
     );
   };
-
-  // ... (rest of the code)
 
   return (
     <Grid container spacing={1} height="100%">
