@@ -18,8 +18,28 @@ const Header = () => {
 
   // Handler for language change
   const handleLanguageChange = (event) => {
+    console.log(event.target.value);
     setSelectedLanguage(event.target.value);
   };
+
+  const languages = [
+    { code: "en", label: "English" },
+    { code: "es", label: "Español" },
+    { code: "fr", label: "Français" },
+    { code: "de", label: "Deutsch" },
+    { code: "it", label: "Italiano" },
+    { code: "pt", label: "Português" },
+    { code: "ru", label: "Русский" },
+    { code: "zh", label: "中文" },
+    { code: "ja", label: "日本語" },
+    { code: "ko", label: "한국어" },
+    { code: "ar", label: "العربية" },
+    { code: "hi", label: "हिन्दी" },
+    { code: "tr", label: "Türkçe" },
+    { code: "nl", label: "Nederlands" },
+    { code: "sv", label: "Svenska" },
+    // Add more languages as needed
+  ];
 
   return (
     <AppBar
@@ -36,9 +56,11 @@ const Header = () => {
             value={selectedLanguage}
             onChange={handleLanguageChange}
           >
-            <MenuItem value="en">English</MenuItem>
-            <MenuItem value="es">Español</MenuItem>
-            {/* Add more language options as needed */}
+            {languages.map((lang) => (
+              <MenuItem key={lang.code} value={lang.code}>
+                {lang.label}
+              </MenuItem>
+            ))}
           </Select>
         </Box>
 

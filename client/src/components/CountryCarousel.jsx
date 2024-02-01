@@ -23,6 +23,7 @@ const CountryCarousel = ({}) => {
   ];
 
   const [currentOffset, setCurrentOffset] = useState(0);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const containerRef = useRef(null);
 
   const totalItems = countries.length;
@@ -37,6 +38,11 @@ const CountryCarousel = ({}) => {
     );
   };
 
+  const handleCountryClick = (country) => {
+    console.log(country);
+    setSelectedCountry(country);
+  };
+
   const countryCards = countries.map((country, index) => (
     <Typography
       key={index}
@@ -46,8 +52,13 @@ const CountryCarousel = ({}) => {
         fontFamily: "Inika",
         fontWeight: 700,
         fontSize: "1.2rem",
-        color: "#3F3A3B",
+        color: selectedCountry === country ? "#F24E1E" : "#3F3A3B",
+        cursor: "pointer",
+        "&:hover": {
+          textDecoration: "underline",
+        },
       }}
+      onClick={() => handleCountryClick(country)}
     >
       {country}
     </Typography>
@@ -86,6 +97,7 @@ const CountryCarousel = ({}) => {
               display: "flex",
               transition: "transform 0.5s ease",
               transform: `translateX(-${currentOffset * (100 / totalItems)}%)`,
+              cursor: "pointer",
             }}
           >
             {countryCards}
