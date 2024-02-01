@@ -52,6 +52,6 @@ app.delete("/user/delete/:uname", (req, res) => {
     user.DELETE(req, res);
 });
 
-app.listen(port, () => {
-    console.log(`app is on port ${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`app is on port ${port}`);
+// });
