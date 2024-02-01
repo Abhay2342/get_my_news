@@ -18,6 +18,7 @@ const HorizontalBar = () => {
   const [selectedMonth, setMonth] = useState("01");
   const [selectedYear, setYear] = useState("2024");
   const [selectedDate, setDate] = useState("2024-01-01");
+  const [isSearchBarVisible, setSearchBarVisibility] = useState(false);
 
   const maxDaysInMonth = (month, year) => {
     return new Date(year, month, 0).getDate();
@@ -49,8 +50,10 @@ const HorizontalBar = () => {
   };
 
   const handleSearchClick = () => {
-    // Implement logic to show/hide search bar
-    // You can use the searchInput state to store the user's input
+    if (isSearchBarVisible && searchInput != "") {
+      console.log(searchInput);
+    }
+    setSearchBarVisibility(!isSearchBarVisible);
   };
 
   const monthNames = [
@@ -200,12 +203,7 @@ const HorizontalBar = () => {
 
           {/* Search bar section */}
           <Grid item xs={3} container justifyContent="flex-end">
-            <SearchIcon
-              color="primary"
-              onClick={handleSearchClick}
-              sx={{ cursor: "pointer" }}
-            />
-            {searchInput && (
+            {isSearchBarVisible && (
               <InputBase
                 placeholder="Search..."
                 value={searchInput}
@@ -213,6 +211,11 @@ const HorizontalBar = () => {
                 sx={{ marginLeft: 2 }}
               />
             )}
+            <SearchIcon
+              color="primary"
+              onClick={handleSearchClick}
+              sx={{ cursor: "pointer" }}
+            />
           </Grid>
         </Grid>
       </Toolbar>
