@@ -1,22 +1,6 @@
 import db from "../db/conn.mjs"
 import bcrypt from "bcrypt"
 
-// const POST = async (req, res) => {
-
-//     let { uname, name, email, password } = req.body;
-
-//     const collection = db.collection("users");
-
-//     const existingUser = await collection.findOne({ uname });
-
-//     if (existingUser) {
-//         res.status(400).send("User already exists");
-//     } else {
-//         await collection.insertOne({ uid, sem1, sem2, cgpa });
-//         res.status(201).send("User created");
-//     }
-// };
-
 const GET = async (req, res) => {
     const collection = db.collection("user_details");
 
@@ -108,7 +92,6 @@ const DELETE = async (req, res) => {
 };
 
 export default {
-    POST,
     GET,
     UPDATE,
     PATCH,
