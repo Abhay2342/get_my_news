@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import Badge from "@mui/material/Badge";
-import { Grid, Paper, Divider, Typography, IconButton } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Grid, IconButton, Typography } from "@mui/material";
+import SouthIcon from "@mui/icons-material/South";
+import CategoryList from "./CategoryList";
+import NewsArticleList from "./NewsArticleList";
+import SelectedArticle from "./SelectedArticle";
+
 import img1 from "../assets/article1.png";
 import img2 from "../assets/article2.png";
 import img3 from "../assets/article3.png";
-import SouthIcon from "@mui/icons-material/South";
+
 const newsArticles = [
   {
     image: img1,
@@ -100,247 +100,50 @@ const newsArticles = [
 ];
 
 const Body = () => {
-  const [selectedItem, setSelectedCategory] = useState(null);
-  const [selectedArticle, setSelectedArticle] = useState(newsArticles[0]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   const handleCategoryClick = (item) => {
-    setSelectedCategory(item);
-    // setSelectedArticle(article);
+    console.log(item);
+    setSelectedItem(item);
+    // Reset selected article when a new category is clicked
+    setSelectedArticle(newsArticles[0]);
   };
 
   const handleArticleClick = (article) => {
+    console.log(article);
     setSelectedArticle(article);
   };
 
   useEffect(() => {
     // Set the default selected item to the first item
-    setSelectedCategory("All");
+    setSelectedItem("All");
     // Set the default selected article to the first article
     setSelectedArticle(newsArticles[0]);
   }, []);
 
-  const renderListItems = () => {
-    const items = [
-      "All",
-      "LATEST NEWS",
-      "OPINION",
-      "SPORTS",
-      "LIFE STYLE",
-      "HEALTH",
-      "SHOWBIZZ",
-      "SCIENCE",
-      "TECHNOLOGY",
-      "TALK SHOW",
-      "EDUCATION",
-      "RELIGION",
-    ];
-
-    return items.map((item) => (
-      <ListItem key={item} onClick={() => handleCategoryClick(item)}>
-        <ListItemButton
-          sx={{
-            lineHeight: "0px",
-            fontFamily: "Inika",
-            fontWeight: 700,
-            fontSize: "1rem",
-            color: selectedItem === item ? "#F24E1E" : "#3F3A3B",
-            padding: "5px 10px",
-          }}
-        >
-          {item}
-        </ListItemButton>
-        {selectedItem === item && (
-          <Badge
-            color="error"
-            variant="dot"
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          />
-        )}
-      </ListItem>
-    ));
-  };
-
-  const renderNewsArticles = () => {
-    return newsArticles.map((article, index) => (
-      <React.Fragment key={index}>
-        <ListItem
-          key={article}
-          sx={{ alignItems: "flex-start", cursor: "pointer" }}
-          onClick={() => handleArticleClick(article)}
-        >
-          {/* Article Image */}
-          <img
-            src={article.image}
-            alt={`Article ${index + 1}`}
-            style={{ width: "158px", height: "118px", marginRight: "10px" }}
-          />
-
-          {/* Article Details */}
-          <div>
-            {/* Top Heading */}
-            <div
-              style={{
-                fontFamily: "Inika",
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: selectedArticle === article ? "#F24E1E" : "#3F3A3B",
-              }}
-            >
-              {article.heading}
-            </div>
-
-            {/* Date */}
-            <div
-              style={{
-                fontFamily: "Lalezar",
-                fontWeight: 400,
-                fontSize: "0.6rem",
-                color: "#3F3A3B",
-                marginBottom: "3px",
-              }}
-            >
-              {article.date}
-            </div>
-
-            {/* Truncated Description */}
-            <div
-              style={{
-                fontFamily: "Inika",
-                fontWeight: 400,
-                fontSize: "0.7rem",
-                color: "#000",
-                lineHeight: "10px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: 4, // Adjust the number of lines you want to display
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {article.description}
-            </div>
-          </div>
-        </ListItem>
-        {index < newsArticles.length - 1 && (
-          <Divider
-            variant="middle"
-            sx={{
-              marginTop: "10px",
-              marginBottom: "10px",
-              color: "#3F3A3B",
-              borderBottomWidth: 1,
-            }}
-          />
-        )}
-      </React.Fragment>
-    ));
-  };
-
-  const renderSelectedArticle = () => {
-    if (!selectedArticle) {
-      return null;
-    }
-    return (
-      <div
-        style={{
-          padding: "20px",
-          height: "80vh",
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* Article Image */}
-        <img
-          src={selectedArticle.image}
-          alt={selectedArticle.heading}
-          style={{
-            width: "100%",
-            height: "218px",
-            objectFit: "cover",
-          }}
-        />
-
-        {/* Article Details */}
-        <div style={{ cwidth: "100%" }}>
-          {/* Date and Heart Icon */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {/* Date */}
-            <Typography
-              variant="subtitle2"
-              style={{
-                fontFamily: "Lalezar",
-                fontWeight: 400,
-              }}
-            >
-              {selectedArticle.date}
-            </Typography>
-
-            {/* Heart Icon */}
-            <IconButton style={{ marginLeft: "auto" }}>
-              <FavoriteBorderIcon />
-            </IconButton>
-          </div>
-
-          {/* Article Title */}
-          <Typography
-            variant="title"
-            style={{
-              fontFamily: "Inika",
-              fontWeight: 700,
-              marginBottom: "10px",
-            }}
-          >
-            {selectedArticle.heading}
-          </Typography>
-
-          {/* Article Description */}
-          <Typography
-            style={{
-              whiteSpace: "pre-line",
-              fontFamily: "Inika",
-              fontWeight: 400,
-              fontSize: "1.1rem",
-            }}
-          >
-            {selectedArticle.description}
-          </Typography>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <Grid container spacing={1} height="100%">
       <Grid item xs={2} justifyContent="center">
-        <List>{renderListItems()}</List>
+        <CategoryList
+          selectedItem={selectedItem}
+          handleCategoryClick={handleCategoryClick}
+        />
       </Grid>
 
       <Grid item xs={3} justifyContent="center">
-        {/* Content for item 2 */}
-        <div
-          style={{
-            height: "80vh",
-            overflowY: "auto",
-          }}
-        >
-          <List>{renderNewsArticles()}</List>
-        </div>
+        <NewsArticleList
+          newsArticles={newsArticles}
+          handleArticleClick={handleArticleClick}
+          selectedArticle={selectedArticle}
+        />
       </Grid>
 
       <Grid item xs={6} justifyContent="center">
-        {/* Content for item 3 */}
-        {renderSelectedArticle()}
+        <SelectedArticle selectedArticle={selectedArticle} />
       </Grid>
 
       <Grid item xs={1} justifyContent="center">
-        {/* Content for item 4 */}
         <div
           style={{
             position: "relative",

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
-
 import {
   Button,
   Typography,
@@ -15,13 +14,17 @@ import {
 
 const HorizontalBar = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [selectedDate, setDate] = useState("01");
+  const [selectedDay, setDay] = useState("01");
   const [selectedMonth, setMonth] = useState("01");
   const [selectedYear, setYear] = useState("2024");
+  const [selectedDate, setDate] = useState("2024-01-01");
 
-  // Handler for language change
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
+  const maxDaysInMonth = (month, year) => {
+    return new Date(year, month, 0).getDate();
+  };
+
+  const handleDayChange = (event) => {
+    setDay(event.target.value);
   };
 
   const handleMonthChange = (event) => {
@@ -32,14 +35,38 @@ const HorizontalBar = () => {
     setYear(event.target.value);
   };
 
+  const handleDateSubmit = () => {
+    const maxDays = maxDaysInMonth(Number(selectedMonth), Number(selectedYear));
+    const isValidDay = Number(selectedDay) <= maxDays;
+
+    if (!isValidDay) {
+      alert("Please select the correct date.");
+    } else {
+      setDate(`${selectedYear}-${selectedMonth}-${selectedDay}`);
+      console.log(selectedDate);
+    }
+    // Add logic for valid date
+  };
+
   const handleSearchClick = () => {
     // Implement logic to show/hide search bar
     // You can use the searchInput state to store the user's input
   };
 
-  const handleDateSubmit = () => {
-    console.log(selectedDate, selectedMonth, selectedYear);
-  };
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   return (
     <AppBar
@@ -91,12 +118,17 @@ const HorizontalBar = () => {
                 label="Date"
                 variant="standard"
                 sx={{ border: "none" }}
-                value={selectedDate}
-                onChange={handleDateChange}
+                value={selectedDay}
+                onChange={handleDayChange}
               >
-                <MenuItem value="01">01</MenuItem>
-                <MenuItem value="02">02</MenuItem>
-                {/* Add more language options as needed */}
+                {[...Array(31)].map((_, index) => (
+                  <MenuItem
+                    key={index + 1}
+                    value={(index + 1).toString().padStart(2, "0")}
+                  >
+                    {(index + 1).toString().padStart(2, "0")}
+                  </MenuItem>
+                ))}
               </Select>
             </Grid>
 
@@ -116,9 +148,14 @@ const HorizontalBar = () => {
                 value={selectedMonth}
                 onChange={handleMonthChange}
               >
-                <MenuItem value="01">JANUARY</MenuItem>
-                <MenuItem value="02">FEBRUARY</MenuItem>
-                {/* Add more language options as needed */}
+                {monthNames.map((month, index) => (
+                  <MenuItem
+                    key={index + 1}
+                    value={(index + 1).toString().padStart(2, "0")}
+                  >
+                    {month.toUpperCase()}
+                  </MenuItem>
+                ))}
               </Select>
             </Grid>
 
@@ -138,9 +175,11 @@ const HorizontalBar = () => {
                 value={selectedYear}
                 onChange={handleYearChange}
               >
-                <MenuItem value="2024">2024</MenuItem>
-                <MenuItem value="2023">2023</MenuItem>
-                {/* Add more language options as needed */}
+                {[...Array(10)].map((_, index) => (
+                  <MenuItem key={index + 1} value={(2024 - index).toString()}>
+                    {(2024 - index).toString()}
+                  </MenuItem>
+                ))}
               </Select>
             </Grid>
 
