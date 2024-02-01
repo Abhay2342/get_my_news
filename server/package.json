@@ -2,17 +2,16 @@
   "name": "get_my_news_server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.mjs",
+  "main": "server.mjs",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.mjs",
+    "start": "nodemon server.mjs",
     "build": "npm install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@netlify/functions": "^2.5.1",
     "@types/express": "^4.17.21",
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
