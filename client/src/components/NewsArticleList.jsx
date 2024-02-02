@@ -15,7 +15,11 @@ const NewsArticleList = ({
         {newsArticles.map((article, index) => (
           <React.Fragment key={index}>
             <ListItem
-              sx={{ alignItems: "flex-start", cursor: "pointer" }}
+              sx={{
+                padding: "15px",
+                alignItems: "flex-start",
+                cursor: "pointer",
+              }}
               onClick={() => handleArticleClick(article)}
             >
               {/* Article Image */}
@@ -73,13 +77,10 @@ const NewsArticleList = ({
             </ListItem>
             {index < newsArticles.length - 1 && (
               <Divider
-                variant="middle"
-                sx={{
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  color: "#3F3A3B",
-                  borderBottomWidth: 1,
-                }}
+                sx={{ borderTopWidth: "1px" }}
+                variant="fullWidth"
+                color="#3F3A3B"
+                flexItem
               />
             )}
           </React.Fragment>

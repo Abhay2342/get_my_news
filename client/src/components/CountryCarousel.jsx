@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Grid, Typography, IconButton, Paper } from "@mui/material";
+import { Grid, Typography, IconButton, Paper, Divider } from "@mui/material";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
@@ -65,12 +65,7 @@ const CountryCarousel = ({}) => {
   ));
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      sx={{ borderBottom: "1px solid #3F3A3B" }}
-    >
+    <Grid container direction="column" alignItems="center">
       <Grid
         item
         container
@@ -112,6 +107,12 @@ const CountryCarousel = ({}) => {
           <ArrowRightIcon fontSize="2rem" />
         </IconButton>
       </Grid>
+      <Divider
+        sx={{ borderTopWidth: "1px" }}
+        variant="fullWidth"
+        color="#3F3A3B"
+        flexItem
+      />
     </Grid>
   );
 };

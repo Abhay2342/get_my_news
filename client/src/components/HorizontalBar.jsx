@@ -10,6 +10,7 @@ import {
   InputBase,
   AppBar,
   Toolbar,
+  Divider,
 } from "@mui/material/";
 
 const HorizontalBar = () => {
@@ -76,149 +77,184 @@ const HorizontalBar = () => {
       position="static"
       sx={{ background: "transparent", boxShadow: "none", minHeight: "0px" }}
     >
-      <Toolbar
-        sx={{
-          borderBottom: "1px solid #3F3A3B",
-          borderTop: "1px solid #3F3A3B",
-        }}
+      <Divider
+        sx={{ borderTopWidth: "1px" }}
+        variant="fullWidth"
+        color="#3F3A3B"
+        flexItem
+      />
+      <Grid
+        container
+        height={"100%"}
+        alignItems="center"
+        justifyContent="space-around"
       >
-        <Grid
-          container
-          spacing={2}
-          alignItems="center"
-          justifyContent="space-around"
-        >
-          {/* Account icon section */}
-          <Grid item xs={3}>
-            <AccountCircleIcon color="primary" sx={{ cursor: "pointer" }} />
-          </Grid>
-
-          {/* "Filter by Date" section */}
-          <Grid
-            item
-            xs={6}
-            alignItems="center"
-            container
-            justifyContent="center"
-          >
-            <Grid item>
-              <Typography variant="filter" color="primary" sx={{ marginX: 1 }}>
-                FILTER BY DATE
-              </Typography>
-            </Grid>
-
-            <Grid
-              item
-              sx={{
-                paddingLeft: 1,
-                borderLeft: 1,
-                borderRight: 1,
-                borderColor: "primary.main",
-              }}
-            >
-              <Select
-                disableUnderline
-                label="Date"
-                variant="standard"
-                sx={{ border: "none" }}
-                value={selectedDay}
-                onChange={handleDayChange}
-              >
-                {[...Array(31)].map((_, index) => (
-                  <MenuItem
-                    key={index + 1}
-                    value={(index + 1).toString().padStart(2, "0")}
-                  >
-                    {(index + 1).toString().padStart(2, "0")}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-
-            <Grid
-              item
-              sx={{
-                paddingLeft: 1,
-                borderRight: 1,
-                borderColor: "primary.main",
-              }}
-            >
-              <Select
-                disableUnderline
-                label="Month"
-                variant="standard"
-                sx={{ border: "none" }}
-                value={selectedMonth}
-                onChange={handleMonthChange}
-              >
-                {monthNames.map((month, index) => (
-                  <MenuItem
-                    key={index + 1}
-                    value={(index + 1).toString().padStart(2, "0")}
-                  >
-                    {month.toUpperCase()}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-
-            <Grid
-              item
-              sx={{
-                paddingLeft: 1,
-                borderRight: 1,
-                borderColor: "primary.main",
-              }}
-            >
-              <Select
-                disableUnderline
-                label="Year"
-                variant="standard"
-                sx={{ border: "none" }}
-                value={selectedYear}
-                onChange={handleYearChange}
-              >
-                {[...Array(10)].map((_, index) => (
-                  <MenuItem key={index + 1} value={(2024 - index).toString()}>
-                    {(2024 - index).toString()}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-
-            <Grid item>
-              <Button
-                onClick={handleDateSubmit}
-                variant="contained"
-                sx={{
-                  marginX: 2,
-                  backgroundColor: "#F24E1E",
-                  fontFamily: "Inika",
-                }}
-              >
-                Submit
-              </Button>
-            </Grid>
-          </Grid>
-
-          {/* Search bar section */}
-          <Grid item xs={3} container justifyContent="flex-end">
-            {isSearchBarVisible && (
-              <InputBase
-                placeholder="Search..."
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                sx={{ marginLeft: 2 }}
-              />
-            )}
-            <SearchIcon
-              color="primary"
-              onClick={handleSearchClick}
-              sx={{ cursor: "pointer" }}
-            />
-          </Grid>
+        {/* Account icon section */}
+        <Grid item xs={1}>
+          <AccountCircleIcon color="primary" sx={{ cursor: "pointer" }} />
         </Grid>
-      </Toolbar>
+        <Divider
+          orientation="vertical"
+          sx={{ borderRightWidth: 2, marginX: 1 }}
+          variant="fullWidth"
+          color="#3F3A3B"
+          flexItem
+        />
+        {/* "Filter by Date" section */}
+        <Grid
+          item
+          xs={9}
+          alignItems="center"
+          container
+          justifyContent="center"
+          height={"100%"}
+        >
+          <Grid item>
+            <Typography variant="filter" color="primary">
+              FILTER BY DATE
+            </Typography>
+          </Grid>
+          <Divider
+            orientation="vertical"
+            sx={{ borderRightWidth: 2, marginX: 3 }}
+            variant="fullWidth"
+            color="#3F3A3B"
+            flexItem
+          />
+          <Grid item>
+            <Select
+              disableUnderline
+              label="Date"
+              variant="standard"
+              sx={{ border: "none" }}
+              value={selectedDay}
+              onChange={handleDayChange}
+            >
+              {[...Array(31)].map((_, index) => (
+                <MenuItem
+                  key={index + 1}
+                  value={(index + 1).toString().padStart(2, "0")}
+                >
+                  {(index + 1).toString().padStart(2, "0")}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+
+          <Divider
+            orientation="vertical"
+            sx={{ borderRightWidth: 2, marginX: 2 }}
+            variant="fullWidth"
+            color="#3F3A3B"
+            flexItem
+          />
+
+          <Grid item>
+            <Select
+              disableUnderline
+              label="Month"
+              variant="standard"
+              sx={{ border: "none" }}
+              value={selectedMonth}
+              onChange={handleMonthChange}
+            >
+              {monthNames.map((month, index) => (
+                <MenuItem
+                  key={index + 1}
+                  value={(index + 1).toString().padStart(2, "0")}
+                >
+                  {month.toUpperCase()}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+
+          <Divider
+            orientation="vertical"
+            sx={{ borderRightWidth: 2, marginX: 2 }}
+            variant="fullWidth"
+            color="#3F3A3B"
+            flexItem
+          />
+
+          <Grid item>
+            <Select
+              disableUnderline
+              label="Year"
+              variant="standard"
+              sx={{ border: "none" }}
+              value={selectedYear}
+              onChange={handleYearChange}
+            >
+              {[...Array(10)].map((_, index) => (
+                <MenuItem key={index + 1} value={(2024 - index).toString()}>
+                  {(2024 - index).toString()}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+
+          <Divider
+            orientation="vertical"
+            sx={{ borderRightWidth: 2, marginLeft: 2 }}
+            variant="fullWidth"
+            color="#3F3A3B"
+            flexItem
+          />
+
+          <Grid item>
+            <Button
+              onClick={handleDateSubmit}
+              variant="contained"
+              sx={{
+                backgroundColor: "#F24E1E",
+                fontFamily: "Inika",
+                borderRadius: "0px",
+              }}
+            >
+              Submit
+            </Button>
+          </Grid>
+          <Divider
+            orientation="vertical"
+            sx={{ borderRightWidth: 2 }}
+            variant="fullWidth"
+            color="#3F3A3B"
+            flexItem
+          />
+        </Grid>
+
+        <Divider
+          orientation="vertical"
+          sx={{ borderRightWidth: 2, marginX: 1 }}
+          variant="fullWidth"
+          color="#3F3A3B"
+          flexItem
+        />
+
+        {/* Search bar section */}
+        <Grid item xs={1} container justifyContent="flex-end">
+          {isSearchBarVisible && (
+            <InputBase
+              placeholder="Search..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              sx={{ marginLeft: 2 }}
+            />
+          )}
+          <SearchIcon
+            color="primary"
+            onClick={handleSearchClick}
+            sx={{ cursor: "pointer" }}
+          />
+        </Grid>
+      </Grid>
+      <Divider
+        sx={{ borderTopWidth: "1px" }}
+        variant="fullWidth"
+        color="#3F3A3B"
+        flexItem
+      />
     </AppBar>
   );
 };

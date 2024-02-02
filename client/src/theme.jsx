@@ -80,7 +80,7 @@ const theme = createTheme({
     },
     filter: {
       fontFamily: "Inika",
-      fontWeight: 500,
+      fontWeight: 700,
       fontSize: "1rem",
       color: "#3F3A3B",
     },

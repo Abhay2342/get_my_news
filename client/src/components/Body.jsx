@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, IconButton, Typography } from "@mui/material";
+import { Grid, IconButton, Typography, Divider } from "@mui/material";
 import SouthIcon from "@mui/icons-material/South";
 import CategoryList from "./CategoryList";
 import NewsArticleList from "./NewsArticleList";
@@ -123,14 +123,27 @@ const Body = () => {
   }, []);
 
   return (
-    <Grid container spacing={1} height="100%">
+    <Grid
+      container
+      margin={"0px"}
+      padding={"0px"}
+      justifyContent={"center"}
+      width={"100%"}
+      // height="100%"
+    >
       <Grid item xs={2} justifyContent="center">
         <CategoryList
           selectedItem={selectedItem}
           handleCategoryClick={handleCategoryClick}
         />
       </Grid>
-
+      <Divider
+        orientation="vertical"
+        sx={{ borderRightWidth: 2, marginLeft: 2 }}
+        variant="fullWidth"
+        color="#3F3A3B"
+        flexItem
+      />
       <Grid item xs={3} justifyContent="center">
         <NewsArticleList
           newsArticles={newsArticles}
@@ -138,12 +151,24 @@ const Body = () => {
           selectedArticle={selectedArticle}
         />
       </Grid>
-
+      <Divider
+        orientation="vertical"
+        sx={{ borderRightWidth: 2, marginRight: 2 }}
+        variant="fullWidth"
+        color="#3F3A3B"
+        flexItem
+      />
       <Grid item xs={6} justifyContent="center">
         <SelectedArticle selectedArticle={selectedArticle} />
       </Grid>
-
-      <Grid item xs={1} justifyContent="center">
+      <Divider
+        orientation="vertical"
+        sx={{ borderRightWidth: 2, marginX: 2 }}
+        variant="fullWidth"
+        color="#3F3A3B"
+        flexItem
+      />
+      <Grid item xs={"auto"} justifyContent="center">
         <div
           style={{
             position: "relative",
