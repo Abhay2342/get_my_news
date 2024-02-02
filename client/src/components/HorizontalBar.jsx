@@ -87,19 +87,22 @@ const HorizontalBar = () => {
         container
         height={"100%"}
         alignItems="center"
-        justifyContent="space-around"
+        justifyContent="space-between"
       >
         {/* Account icon section */}
-        <Grid item xs={1}>
-          <AccountCircleIcon color="primary" sx={{ cursor: "pointer" }} />
+        <Grid item container xs={"auto"}>
+          <Grid item marginX={3}>
+            <AccountCircleIcon color="primary" sx={{ cursor: "pointer" }} />
+          </Grid>
+          <Divider
+            orientation="vertical"
+            sx={{ borderRightWidth: 2 }}
+            variant="fullWidth"
+            color="#3F3A3B"
+            flexItem
+          />
         </Grid>
-        <Divider
-          orientation="vertical"
-          sx={{ borderRightWidth: 2, marginX: 1 }}
-          variant="fullWidth"
-          color="#3F3A3B"
-          flexItem
-        />
+
         {/* "Filter by Date" section */}
         <Grid
           item
@@ -224,29 +227,36 @@ const HorizontalBar = () => {
           />
         </Grid>
 
-        <Divider
-          orientation="vertical"
-          sx={{ borderRightWidth: 2, marginX: 1 }}
-          variant="fullWidth"
-          color="#3F3A3B"
-          flexItem
-        />
-
         {/* Search bar section */}
-        <Grid item xs={1} container justifyContent="flex-end">
-          {isSearchBarVisible && (
-            <InputBase
-              placeholder="Search..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              sx={{ marginLeft: 2 }}
-            />
-          )}
-          <SearchIcon
-            color="primary"
-            onClick={handleSearchClick}
-            sx={{ cursor: "pointer" }}
+        <Grid
+          item
+          xs={"auto"}
+          container
+          justifyContent="flex-end"
+          alignContent={"center"}
+        >
+          <Divider
+            orientation="vertical"
+            sx={{ borderRightWidth: 2 }}
+            variant="fullWidth"
+            color="#3F3A3B"
+            flexItem
           />
+          <Grid item marginX={3}>
+            {isSearchBarVisible && (
+              <InputBase
+                placeholder="Search..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                sx={{ marginLeft: 2 }}
+              />
+            )}
+            <SearchIcon
+              color="primary"
+              onClick={handleSearchClick}
+              sx={{ cursor: "pointer" }}
+            />
+          </Grid>
         </Grid>
       </Grid>
       <Divider
