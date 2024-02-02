@@ -1,12 +1,189 @@
-import React from 'react';
+import React from "react";
+import {
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  Button,
+  Typography,
+  Divider,
+  Link,
+} from "@mui/material";
+import img from "../../assets/news.png";
+import GoogleIcon from "../../assets/google.svg";
+import TwitterIcon from "../../assets/twitter.svg";
+import LinkedInIcon from "../../assets/linkedin.svg";
 
-function LoginPage() {
+const LoginPage = () => {
   return (
-    <div>
-      <h2>Login Page</h2>
-      <p>This is the Login Page. Learn more about us here.</p>
-    </div>
+    <Container maxWidth="lg" style={{ height: "100vh" }}>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        style={{ height: "100%" }}
+      >
+        {/* Left Side with Image */}
+        <Grid item xs={5}>
+          <img
+            src={img} // replace with the path to your image
+            alt="Login Page Image"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </Grid>
+        {/* Right Side with Login Form */}
+        <Divider
+          orientation="vertical"
+          sx={{ marginX: "50px", borderRightWidth: 2 }}
+          variant="middle"
+          flexItem
+        />
+
+        <Grid
+          item
+          xs={5}
+          sx={{ justifyContent: "center" }}
+          justifyContent="center"
+        >
+          <Paper
+            elevation={3}
+            style={{
+              padding: "20px",
+              textAlign: "flex-start",
+              border: "0px",
+              boxShadow: "0px 0px 0px 0px",
+            }}
+          >
+            <Button variant="text" href="/">
+              <Typography variant="h1" sx={{ marginBottom: "30px" }}>
+                GET MY NEWS
+              </Typography>
+            </Button>
+            <form>
+              <TextField
+                sx={{
+                  background: "#FFFFFF",
+                  margin: "5px 0px",
+                  boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
+                  border: 1,
+                }}
+                label="Username / Email"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="text"
+                required
+              />
+              <TextField
+                sx={{
+                  background: "#FFFFFF",
+                  margin: "5px 0px",
+                  border: 1,
+                  boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
+                }}
+                label="Password"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="password"
+                required
+              />
+              <Grid
+                container
+                justifyContent="space-between"
+                alignItems="center"
+                sx={{ paddingTop: "20px" }}
+              >
+                <Grid item>
+                  <Typography variant="filter">
+                    <Link href="#" color="inherit">
+                      Forgot Your Password?
+                    </Link>
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="filter">
+                    <Link href="/signup" color="inherit">
+                      New User?
+                    </Link>
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                justifyContent="space-between"
+                alignItems="center"
+                sx={{}}
+              >
+                <Grid item xs={6}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    type="submit"
+                    sx={{
+                      backgroundColor: "#F24E1E",
+                      fontFamily: "Inika",
+                      borderRadius: "0px",
+                      lineHeight: "2rem",
+                      border: "12px",
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Grid
+                    container
+                    justifyContent="flex-end"
+                    alignItems="center"
+                    sx={{ paddingBottom: "5px", paddingTop: "5px" }}
+                  >
+                    <Grid item>
+                      {/* Social Icons To Sign In Items */}
+                      <img
+                        src={GoogleIcon} // replace with the path to your image
+                        alt="Google"
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item marginX={"15px"}>
+                      <img
+                        src={TwitterIcon} // replace with the path to your image
+                        alt="Login Page Image"
+                        style={{
+                          width: "40px",
+                          height: "37px",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item>
+                      <img
+                        src={LinkedInIcon} // replace with the path to your image
+                        alt="Login Page Image"
+                        style={{
+                          width: "37px",
+                          height: "37px",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
-}
+};
 
 export default LoginPage;
