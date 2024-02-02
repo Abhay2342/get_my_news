@@ -71,6 +71,7 @@ const theme = createTheme({
       fontFamily: "Metal Mania",
       fontWeight: 400,
       fontSize: "3rem",
+      textShadow: "0px 5px 4px rgba(0, 0, 0, 0.25)",
     },
     h2: {
       fontFamily: '"Roboto", "Helvetica", "Arial", "sans-serif"',

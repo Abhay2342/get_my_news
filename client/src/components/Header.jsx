@@ -76,11 +76,16 @@ const Header = () => {
 
         {/* Third Column - Login/Signup Buttons with Divider */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button variant="link">Login</Button>
+          <Button href="/login" variant="link">
+            Login
+          </Button>
+
           <Typography variant="h6" color="primary" component="div">
             |
           </Typography>
-          <Button variant="link">Signup</Button>
+          <Button href="/signup" variant="link">
+            Signup
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>
