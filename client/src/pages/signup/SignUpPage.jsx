@@ -13,8 +13,20 @@ import img from "../../assets/news.png";
 import GoogleIcon from "../../assets/google.svg";
 import TwitterIcon from "../../assets/twitter.svg";
 import LinkedInIcon from "../../assets/linkedin.svg";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const SignUpPage = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Handler for login button click
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
   return (
     <Container maxWidth="lg" style={{ height: "100vh" }}>
       <Grid
@@ -54,7 +66,7 @@ const SignUpPage = () => {
               boxShadow: "0px 0px 0px 0px",
             }}
           >
-            <Button variant="text" href="/">
+            <Button variant="text" onClick={handleLogoClick}>
               <Typography variant="h1" sx={{ marginBottom: "30px" }}>
                 GET MY NEWS
               </Typography>
@@ -145,10 +157,16 @@ const SignUpPage = () => {
               >
                 <Grid item>
                   <Typography variant="filter">
-                    <Link href="/login" color="inherit" onClick>
-                      Already a Member?{" "}
-                      <span style={{ fontWeight: "bold" }}>LOG IN</span>
-                    </Link>
+                    <Button
+                      variant="text"
+                      sx={{ fontWeight: 700, fontFamily: "Inika" }}
+                      onClick={handleLoginClick}
+                    >
+                      <Link href="/login" color="inherit">
+                        Already a Member?{" "}
+                        <span style={{ fontWeight: "bold" }}>LOG IN</span>
+                      </Link>
+                    </Button>
                   </Typography>
                 </Grid>
               </Grid>
