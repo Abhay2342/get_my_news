@@ -12,10 +12,21 @@ import {
   Toolbar,
 } from "@mui/material/";
 
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 const Header = () => {
-  // State to manage the selected language
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Handler for login button click
+  const handleLoginClick = () => {
+    navigate("/login"); // Navigate to /login route using useNavigate
+  };
+
+  const handleSignUpClick = () => {
+    navigate("/signup");
+  };
   // Handler for language change
   const handleLanguageChange = (event) => {
     console.log(event.target.value);
@@ -76,15 +87,15 @@ const Header = () => {
 
         {/* Third Column - Login/Signup Buttons with Divider */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button href="/login" variant="link">
+          <Button variant="link" onClick={handleLoginClick}>
             Login
           </Button>
 
           <Typography variant="h6" color="primary" component="div">
             |
           </Typography>
-          <Button href="/signup" variant="link">
-            Signup
+          <Button variant="link" onClick={handleSignUpClick}>
+            SignUp
           </Button>
         </Box>
       </Toolbar>
