@@ -25,7 +25,7 @@ const LoginPage = () => {
   };
 
   const handleLogoClick = () => {
-    navigate("/signup");
+    navigate("/");
   };
   return (
     <Container maxWidth="lg" style={{ height: "100vh" }}>
