@@ -162,7 +162,11 @@ const SignUpPage = () => {
                       sx={{ fontWeight: 700, fontFamily: "Inika" }}
                       onClick={handleLoginClick}
                     >
-                      <Link href="/login" color="inherit">
+                      <Link
+                        href="/login"
+                        color="inherit"
+                        sx={{ color: "inherit", textDecoration: "underline" }}
+                      >
                         Already a Member?{" "}
                         <span style={{ fontWeight: "bold" }}>LOG IN</span>
                       </Link>

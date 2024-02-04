@@ -1,23 +1,18 @@
 // CategoryList.js
 import React from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import Badge from "@mui/material/Badge";
 import { Avatar, Grid, Typography, Button, TextField } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 
 const ProfileSettingsBody = ({}) => {
-  const [gender, setGender] = React.useState("female");
+  const [value, setGender] = React.useState("female");
 
   const handleGenderChange = (event) => {
-    setGender(event.target.gender);
+    setGender(event.target.value);
+    console.log(value);
   };
   return (
     <form>
@@ -158,10 +153,11 @@ const ProfileSettingsBody = ({}) => {
           <Grid item>
             <FormControl>
               <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
                 row
-                defaultValue="female"
-                name="radio-buttons-group"
+                value={value}
+                onChange={handleGenderChange}
               >
                 <FormControlLabel
                   value="female"
@@ -174,9 +170,9 @@ const ProfileSettingsBody = ({}) => {
                   label="Male"
                 />
                 <FormControlLabel
-                  value="other"
+                  value="others"
                   control={<Radio />}
-                  label="Other"
+                  label="Others"
                 />
               </RadioGroup>
             </FormControl>
