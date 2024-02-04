@@ -5,7 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Badge from "@mui/material/Badge";
 import { Avatar, Grid, Typography, Button, TextField } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -26,13 +26,13 @@ const ProfileSettingsBody = ({}) => {
           <Grid
             item
             container
-            justifyContent={"center"}
+            justifyContent={"flex-start"}
             justifyItems={"center"}
             xs={6}
           >
             <Grid item xs={3}>
               <Avatar sx={{ height: "100px", width: "100px" }}>
-                <AccountCircle sx={{ fontSize: "80px" }} />
+                <AccountCircleIcon sx={{ fontSize: "80px" }} />
               </Avatar>
             </Grid>
 
@@ -42,9 +42,12 @@ const ProfileSettingsBody = ({}) => {
                   // onClick={handleDateSubmit}
                   variant="contained"
                   sx={{
-                    backgroundColor: "#F24E1E",
+                    backgroundColor: "#FE7249",
                     fontFamily: "Inika",
                     borderRadius: "0px",
+                    border: 1,
+                    borderColor: "black",
+                    boxShadow: "4px 4px 4px rgba(0, 0, 0, 0.25)",
                   }}
                 >
                   REMOVE PICTURE
@@ -56,9 +59,12 @@ const ProfileSettingsBody = ({}) => {
                   // onClick={handleDateSubmit}
                   variant="contained"
                   sx={{
-                    backgroundColor: "#F24E1E",
+                    backgroundColor: "#FE7249",
                     fontFamily: "Inika",
                     borderRadius: "0px",
+                    border: 1,
+                    borderColor: "black",
+                    boxShadow: "4px 4px 4px rgba(0, 0, 0, 0.25)",
                   }}
                 >
                   REPLACE PICTURE
@@ -145,31 +151,35 @@ const ProfileSettingsBody = ({}) => {
           </Grid>
         </Grid>
 
-        <Grid item container>
+        <Grid item>
           <Grid item>
-            <Typography variant="inputTitle">WHAT"S YOUR GENDER?</Typography>
-
-            {/* <FormControl> */}
-            <RadioGroup
-              row
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              value={gender}
-              onChange={handleGenderChange}
-            >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Female"
-              />
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="Other"
-              />
-            </RadioGroup>
-            {/* </FormControl> */}
+            <Typography variant="inputTitle">WHAT'S YOUR GENDER?</Typography>
+          </Grid>
+          <Grid item>
+            <FormControl>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                row
+                defaultValue="female"
+                name="radio-buttons-group"
+              >
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                />
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+                <FormControlLabel
+                  value="other"
+                  control={<Radio />}
+                  label="Other"
+                />
+              </RadioGroup>
+            </FormControl>
           </Grid>
         </Grid>
 
@@ -182,6 +192,9 @@ const ProfileSettingsBody = ({}) => {
                 backgroundColor: "#F24E1E",
                 fontFamily: "Inika",
                 borderRadius: "0px",
+                boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
+                border: 1,
+                borderColor: "black",
               }}
             >
               SAVE CHANGES

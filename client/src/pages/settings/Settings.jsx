@@ -40,7 +40,7 @@ const ProfileSettingsPage = () => {
               <Divider
                 orientation="vertical"
                 sx={{ borderRightWidth: 2, marginX: 5 }}
-                variant="middle"
+                variant="fullWidth"
                 color="#3F3A3B"
                 flexItem
               />

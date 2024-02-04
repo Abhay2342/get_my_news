@@ -16,6 +16,14 @@ const theme = createTheme({
           fontSize: "0.8rem",
           color: "#3F3A3B",
         },
+
+        contained: {
+          color: "black",
+          fontWeight: 600,
+          ":hover": {
+            color: "white",
+          },
+        },
       },
     },
 
@@ -98,8 +106,8 @@ const theme = createTheme({
     },
     inputTitle: {
       fontFamily: "Inika",
-      color: "3F3A3B",
-      fontWeight: 400,
+      color: "rgba(0, 0, 0, 0.60)",
+      fontWeight: 700,
       fontSize: "1rem",
       textDecoration: "underline",
     },

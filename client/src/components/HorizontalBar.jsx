@@ -12,6 +12,7 @@ import {
   Toolbar,
   Divider,
 } from "@mui/material/";
+import { useNavigate } from "react-router-dom";
 
 const HorizontalBar = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -20,6 +21,13 @@ const HorizontalBar = () => {
   const [selectedYear, setYear] = useState("2024");
   const [selectedDate, setDate] = useState("2024-01-01");
   const [isSearchBarVisible, setSearchBarVisibility] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Handler for login button click
+
+  const handleAccountClick = () => {
+    navigate("/profile-settings");
+  };
 
   const maxDaysInMonth = (month, year) => {
     return new Date(year, month, 0).getDate();
@@ -93,6 +101,7 @@ const HorizontalBar = () => {
         <Grid item container xs={"auto"}>
           <Grid item marginX={3} sx={{ lineHeight: 0 }}>
             <AccountCircleIcon
+              onClick={handleAccountClick}
               color="primary"
               sx={{ cursor: "pointer", fontSize: "28px" }}
             />
