@@ -91,8 +91,11 @@ const HorizontalBar = () => {
       >
         {/* Account icon section */}
         <Grid item container xs={"auto"}>
-          <Grid item marginX={3}>
-            <AccountCircleIcon color="primary" sx={{ cursor: "pointer" }} />
+          <Grid item marginX={3} sx={{ lineHeight: 0 }}>
+            <AccountCircleIcon
+              color="primary"
+              sx={{ cursor: "pointer", fontSize: "28px" }}
+            />
           </Grid>
           <Divider
             orientation="vertical"
@@ -242,7 +245,7 @@ const HorizontalBar = () => {
             color="#3F3A3B"
             flexItem
           />
-          <Grid item marginX={3}>
+          <Grid item marginX={3} sx={{ lineHeight: 0 }}>
             {isSearchBarVisible && (
               <InputBase
                 placeholder="Search..."
@@ -254,7 +257,7 @@ const HorizontalBar = () => {
             <SearchIcon
               color="primary"
               onClick={handleSearchClick}
-              sx={{ cursor: "pointer" }}
+              sx={{ cursor: "pointer", fontSize: "28px" }}
             />
           </Grid>
         </Grid>

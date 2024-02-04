@@ -96,6 +96,13 @@ const theme = createTheme({
       fontSize: "2.2rem",
       color: "#3F3A3B",
     },
+    inputTitle: {
+      fontFamily: "Inika",
+      color: "3F3A3B",
+      fontWeight: 400,
+      fontSize: "1rem",
+      textDecoration: "underline",
+    },
   },
 });
 
