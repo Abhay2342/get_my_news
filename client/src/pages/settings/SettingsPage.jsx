@@ -4,21 +4,58 @@ import BasicBreadcrumbs from "../../components/BasicBreadcrumbs";
 import { Grid, Divider, Typography, IconButton } from "@mui/material";
 import SettingsList from "../../components/SettingsList";
 import { useState, useEffect } from "react";
-import ProfileSettingsBody from "../../components/ProfileSettingsBody";
+import ProfileSettingsBody from "../../components/SettingsPage/ProfileSettingsBody";
 import SouthIcon from "@mui/icons-material/South";
-
-const ProfileSettingsPage = () => {
+import AccountSettingsBody from "../../components/SettingsPage/AccountSettingsBody";
+import { useNavigate } from "react-router-dom";
+import coming_soon from "../../assets/coming_soon.png";
+const SettingsPage = () => {
+  const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState(null);
+
   const handleCategoryClick = (item) => {
     console.log(item);
     setSelectedItem(item);
-    // Reset selected article when a new category is clicked
+
+    // Change the URL based on the selected item
+    if (item === "ACCOUNT") {
+      navigate("/account-settings");
+    } else {
+      // If not "ACCOUNT", navigate to the default profile settings URL
+      navigate("/profile-settings");
+    }
   };
+
   useEffect(() => {
     // Set the default selected item to the first item
     setSelectedItem("PROFILE");
-    // Set the default selected article to the first article
+    if (selectedItem === "ACCOUNT") {
+      navigate("/account-settings");
+    } else {
+      // If not "ACCOUNT", navigate to the default profile settings URL
+      navigate("/profile-settings");
+    }
   }, []);
+
+  const renderSettingsBody = () => {
+    if (selectedItem === "PROFILE") {
+      return <ProfileSettingsBody />;
+    } else if (selectedItem === "ACCOUNT") {
+      return <AccountSettingsBody />;
+    } else {
+      // Render an image or any other content when no match is found
+      return (
+        <img
+          src={coming_soon} // Replace with the path to your image
+          alt="Default Image"
+          style={{ width: "100%", height: "80vh" }}
+        />
+      );
+    }
+
+    // Add more conditions for other items if needed
+    return null;
+  };
 
   return (
     <div>
@@ -46,7 +83,7 @@ const ProfileSettingsPage = () => {
               />
 
               <Grid item xs={10} paddingX={"50px"} justifyContent={"center"}>
-                <ProfileSettingsBody />
+                {renderSettingsBody()}
               </Grid>
             </Grid>
           </Grid>
@@ -99,12 +136,4 @@ const ProfileSettingsPage = () => {
   );
 };
 
-const AccountSettingsPage = () => {
-  return (
-    <div>
-      <LoggedInHeader />
-    </div>
-  );
-};
-
-export { ProfileSettingsPage, AccountSettingsPage };
+export { SettingsPage };
