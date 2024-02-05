@@ -34,7 +34,7 @@ const LoggedInHeader = () => {
   };
 
   const handleContactUsClick = () => {
-    navigate("/");
+    navigate("/contact-us");
   };
 
   return (
