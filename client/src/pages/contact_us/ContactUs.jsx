@@ -26,19 +26,26 @@ const ContactUs = () => {
     navigate("/");
   };
   return (
-    <Container style={{ height: "100vh" }}>
+    <Container
+      style={{
+        height: "100vh",
+        paddingX: "0px",
+        alignSelf: "center",
+        justifyContent: "center",
+      }}
+      maxWidth="1400px"
+    >
       <Grid
         container
         justifyContent="center"
         alignItems="center"
-        height={"100vh"}
+        style={{ height: "100%" }}
       >
         {/* Left Side with Image */}
-        <Grid item xs={"auto"} alignItems={"stretch"} height={"100%"}>
+        <Grid item xs={5} alignSelf={"flex-start"}>
           <img
             src={img} // replace with the path to your image
-            alt="Login Page Image"
-            style={{ width: "100%", objectFit: "cover" }}
+            alt="Contact Us Image"
           />
         </Grid>
         {/* Right Side with Login Form */}
@@ -51,7 +58,7 @@ const ContactUs = () => {
 
         <Grid
           item
-          xs={6}
+          xs={5}
           sx={{ justifyContent: "center" }}
           justifyContent="center"
         >

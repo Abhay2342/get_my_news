@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   Container,
   Grid,
@@ -27,6 +28,50 @@ const LoginPage = () => {
   const handleLogoClick = () => {
     navigate("/");
   };
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleUsernameChange = (event) => {
+    setEmail(event.target.value);
+    // console.log(email);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    // console.log(password);
+  };
+
+  const handleLoginSubmit = async (event) => {
+    console.log("Start");
+    event.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        // Handle successful login, e.g., redirect to a dashboard
+        // navigate("/dashboard");
+        let data = await response.text();
+        console.log(data);
+      } else {
+        // Handle unsuccessful login, show an error message, etc.
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
+
   return (
     <Container maxWidth="lg" style={{ height: "100vh" }}>
       <Grid
@@ -73,6 +118,7 @@ const LoginPage = () => {
             </Button>
             <form>
               <TextField
+                onChange={handleUsernameChange}
                 sx={{
                   background: "#FFFFFF",
                   margin: "5px 0px",
@@ -87,6 +133,7 @@ const LoginPage = () => {
                 required
               />
               <TextField
+                onChange={handlePasswordChange}
                 sx={{
                   background: "#FFFFFF",
                   margin: "5px 0px",
@@ -135,6 +182,7 @@ const LoginPage = () => {
                   <Button
                     variant="contained"
                     color="primary"
+                    onClick={handleLoginSubmit}
                     fullWidth
                     type="submit"
                     sx={{
