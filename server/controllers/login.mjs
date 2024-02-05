@@ -12,7 +12,7 @@ const login = async (req, res) => {
             const passwordMatch = await bcrypt.compare(password, user.password);
 
             if (passwordMatch) {
-                res.status(200).send("Logged In");
+                res.status(200).send(user);
             } else {
                 res.status(401).send("Invalid Credentials!");
             }

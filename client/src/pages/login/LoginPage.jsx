@@ -1,5 +1,6 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useContext } from "react";
+
 import {
   Container,
   Grid,
@@ -9,20 +10,27 @@ import {
   Typography,
   Divider,
   Link,
+  CircularProgress, // Import CircularProgress for the loading spinner
 } from "@mui/material";
 import img from "../../assets/news.png";
 import GoogleIcon from "../../assets/google.svg";
 import TwitterIcon from "../../assets/twitter.svg";
 import LinkedInIcon from "../../assets/linkedin.svg";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { useUser } from "../../components/UserContext";
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { user, loginUser, isLoggedIn } = useUser(); // Destructure user and loginUser from useUser
 
+  // Check if the user is already authenticated
+  if (isLoggedIn) {
+    navigate("/"); // Redirect to the home page
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // Handler for login button click
+  const [loading, setLoading] = useState(false); // State to manage loading spinner
 
+  // Handler for login button click
   const handleSignUpClick = () => {
     navigate("/signup");
   };
@@ -33,55 +41,44 @@ const LoginPage = () => {
 
   const handleUsernameChange = (event) => {
     setEmail(event.target.value);
-    // console.log(email);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-    // console.log(password);
   };
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await fetch(
-        "https://get-my-news-server.onrender.com/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
+      setLoading(true);
+
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
       if (response.ok) {
-        // Handle successful login
-        console.log("Login successful");
+        const userData = await response.json();
 
-        // Set user as signed in (you might use a global state management library here)
-        // For example, you can use React context, Redux, or React query
-        // For simplicity, let's assume you have a global context named "AuthContext"
-        // and a function "setUserSignedIn" to update the user's signed-in status
+        // Update user context with email and other user data
+        loginUser(userData);
 
-        // Assuming you have a function like setUserSignedIn in your global context
-        // setUserSignedIn(true);
-
-        // For now, you can simulate setting user signed-in status using localStorage
-        localStorage.setItem("isLoggedIn", "true");
-
-        // Navigate to the home page
-        navigate("/");
+        setLoading(false);
+        navigate("/profile-settings");
       } else {
-        // Handle unsuccessful login, show an error message, etc.
         console.error("Login failed");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error during login:", error);
+      setLoading(false);
     }
   };
 
@@ -206,7 +203,11 @@ const LoginPage = () => {
                       border: "12px",
                     }}
                   >
-                    Login
+                    {loading ? (
+                      <CircularProgress size={24} color="inherit" />
+                    ) : (
+                      "Login"
+                    )}
                   </Button>
                 </Grid>
                 <Grid item xs={6}>
