@@ -15,14 +15,46 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 
 const AccountSettingsBody = ({}) => {
-  const [value, setGender] = React.useState("female");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-    console.log(value);
+    const formData = new FormData(event.target);
+    const formObject = {};
+    formData.forEach((value, key) => {
+      formObject[key] = value;
+    });
+    console.log(formData);
+    try {
+      const response = await fetch(
+        "http://localhost:3000//user/update/:uname",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formObject),
+        }
+      );
+
+      console.log("Support response:", response);
+
+      if (response.ok) {
+        // Handle successful sign-up, e.g., redirect to a confirmation page
+        console.log("Ticket Created");
+        // navigate("/login");
+      } else {
+        // Handle unsuccessful sign-up, show an error message, etc.
+        console.error("Ticket Creation failed");
+        let data = await response.text();
+        console.log(data);
+      }
+    } catch (error) {
+      console.error("Error during Ticket Creation:", error);
+    }
   };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Grid container rowSpacing={5}>
         <Grid item container spacing={1}>
           <Grid

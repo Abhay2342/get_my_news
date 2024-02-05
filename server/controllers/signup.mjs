@@ -19,7 +19,16 @@ const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Insert the new user with the hashed password
-        await collection.insertOne({ uname, fname, lname, email, password: hashedPassword, gender: null, age: null, profile_img: null, about: null });
+        await collection.insertOne({ uname, 
+            fname, 
+            lname, 
+            email, 
+            password: hashedPassword, 
+            gender: null, 
+            age: null, 
+            about: null,
+            apikey: null, 
+            avatar: null });
 
         res.status(201).send("User created");
     } catch (error) {

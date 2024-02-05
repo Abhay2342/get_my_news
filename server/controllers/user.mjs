@@ -1,13 +1,11 @@
-import db from "../db/conn.mjs"
-import bcrypt from "bcrypt"
+import db from "../db/conn.mjs";
+import bcrypt from "bcrypt";
 
 const GET = async (req, res) => {
     const collection = db.collection("user_details");
 
-    const results = await collection.find()
-        .toArray();
+    const results = await collection.find().toArray();
     res.send(results);
-
 };
 
 const PATCH = async (req, res) => {
@@ -17,23 +15,25 @@ const PATCH = async (req, res) => {
 
     const collection = db.collection("users");
 
-    const existingUser = await collection.findOne({ "uname": uname });
+    const existingUser = await collection.findOne({ uname: uname });
     if (!existingUser) {
         res.status(404).send("User not found");
     } else {
-        await collection.updateOne({ "uname": uname }, { $set: { "name": name, "email": email, "gender": gender, "age": age } });
+        await collection.updateOne(
+            { uname: uname },
+            { $set: { name: name, email: email, gender: gender, age: age } }
+        );
         res.status(200).send("User updated");
     }
 };
 
 const UPDATE = async (req, res) => {
-
     let uname = req.params.uname;
-    let { fname, lname, gender, age, about } = req.body;
+    let { fname, lname, gender, age, about, avatar } = req.body;
 
     const collection = db.collection("users");
 
-    const existingUser = await collection.findOne({ "uname": uname });
+    const existingUser = await collection.findOne({ uname: uname });
     if (!fname) {
         fname = existingUser.fname;
     }
@@ -49,28 +49,44 @@ const UPDATE = async (req, res) => {
     if (!about) {
         about = existingUser.about;
     }
+    if (!avatar) {
+        lname = existingUser.avatar;
+    }
+    if (!apikey) {
+        lname = existingUser.apikey;
+    }
 
     if (!existingUser) {
         res.status(404).send("User not found");
     } else {
-        await collection.updateOne({ "uname": uname }, { $set: { "fname": fname, "lname": lname, "gender": gender, "age": age } });
+        await collection.updateOne(
+            { uname: uname },
+            {
+                $set: {
+                    fname: fname,
+                    lname: lname,
+                    gender: gender,
+                    age: age,
+                    apikey: apikey,
+                    avatar: avatar,
+                },
+            }
+        );
         res.status(200).send("User updated");
     }
 };
 
-const PASSWORD = async (req, res) => {
-
-};
+const PASSWORD = async (req, res) => { };
 
 const DELETE = async (req, res) => {
     let uname = req.params.uname;
     let { password } = req.body;
-    console.log(uname, password)
+    console.log(uname, password);
 
     const collection = db.collection("users");
 
     try {
-        const existingUser = await collection.findOne({ "uname": uname });
+        const existingUser = await collection.findOne({ uname: uname });
 
         if (!existingUser) {
             res.status(404).send("User not found");
@@ -80,7 +96,7 @@ const DELETE = async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
         if (passwordMatch) {
-            await collection.deleteOne({ "uname": uname });
+            await collection.deleteOne({ uname: uname });
             res.status(200).send("User deleted");
         } else {
             res.status(401).send("Invalid Password");
@@ -96,5 +112,5 @@ export default {
     UPDATE,
     PATCH,
     DELETE,
-    PASSWORD
+    PASSWORD,
 };
