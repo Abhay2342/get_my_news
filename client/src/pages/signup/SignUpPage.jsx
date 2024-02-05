@@ -18,8 +18,6 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 const SignUpPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
-  // Handler for login button click
-
   const handleLoginClick = () => {
     navigate("/login");
   };
@@ -27,6 +25,42 @@ const SignUpPage = () => {
   const handleLogoClick = () => {
     navigate("/");
   };
+
+  const handleSignUpSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const formObject = {};
+    formData.forEach((value, key) => {
+      formObject[key] = value;
+    });
+
+    try {
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
+      });
+
+      console.log("Sign Up response:", response);
+
+      if (response.ok) {
+        // Handle successful sign-up, e.g., redirect to a confirmation page
+        console.log("User Created");
+        navigate("/login");
+      } else {
+        // Handle unsuccessful sign-up, show an error message, etc.
+        console.error("Sign Up failed");
+        let data = await response.text();
+        console.log(data);
+      }
+    } catch (error) {
+      console.error("Error during Sign Up:", error);
+    }
+  };
+
   return (
     <Container maxWidth="lg" style={{ height: "100vh" }}>
       <Grid
@@ -71,7 +105,7 @@ const SignUpPage = () => {
                 GET MY NEWS
               </Typography>
             </Button>
-            <form>
+            <form onSubmit={handleSignUpSubmit}>
               <Grid container justifyContent="space-between" spacing={1}>
                 <Grid item xs={6}>
                   <TextField
@@ -82,6 +116,7 @@ const SignUpPage = () => {
                       border: 1,
                     }}
                     label="FIRST NAME"
+                    name="fname"
                     variant="outlined"
                     fullWidth
                     margin="normal"
@@ -98,6 +133,7 @@ const SignUpPage = () => {
                       boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
                       border: 1,
                     }}
+                    name="lname"
                     label="LAST NAME"
                     variant="outlined"
                     fullWidth
@@ -114,6 +150,7 @@ const SignUpPage = () => {
                   boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
                   border: 1,
                 }}
+                name="email"
                 label="EMAIL"
                 variant="outlined"
                 fullWidth
@@ -128,6 +165,7 @@ const SignUpPage = () => {
                   boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
                   border: 1,
                 }}
+                name="uname"
                 label="USERNAME"
                 variant="outlined"
                 fullWidth
@@ -142,6 +180,7 @@ const SignUpPage = () => {
                   border: 1,
                   boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
                 }}
+                name="password"
                 label="Password"
                 variant="outlined"
                 fullWidth
