@@ -18,23 +18,47 @@ const ContactUs = () => {
 
   // Handler for login button click
 
-  const handleSignUpClick = () => {
-    navigate("/signup");
-  };
-
   const handleLogoClick = () => {
     navigate("/");
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const formObject = {};
+    formData.forEach((value, key) => {
+      formObject[key] = value;
+    });
+
+    try {
+      const response = await fetch("http://localhost:3000/support", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
+      });
+
+      console.log("Support response:", response);
+
+      if (response.ok) {
+        // Handle successful sign-up, e.g., redirect to a confirmation page
+        console.log("Ticket Created");
+        // navigate("/login");
+      } else {
+        // Handle unsuccessful sign-up, show an error message, etc.
+        console.error("Ticket Creation failed");
+        let data = await response.text();
+        console.log(data);
+      }
+    } catch (error) {
+      console.error("Error during Ticket Creation:", error);
+    }
+  };
+
   return (
-    <Container
-      style={{
-        height: "100vh",
-        paddingX: "0px",
-        alignSelf: "center",
-        justifyContent: "center",
-      }}
-      maxWidth="1400px"
-    >
+    <Container maxWidth="lg" style={{ height: "100vh" }}>
       <Grid
         container
         justifyContent="center"
@@ -46,12 +70,13 @@ const ContactUs = () => {
           <img
             src={img} // replace with the path to your image
             alt="Contact Us Image"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </Grid>
         {/* Right Side with Login Form */}
         <Divider
           orientation="vertical"
-          sx={{ marginX: "20px", borderRightWidth: 2 }}
+          sx={{ marginX: "50px", borderRightWidth: 2 }}
           variant="middle"
           flexItem
         />
@@ -76,7 +101,7 @@ const ContactUs = () => {
                 GET MY NEWS
               </Typography>
             </Button>
-            <form>
+            <form onSubmit={handleSubmit}>
               <Grid container rowSpacing={2}>
                 <Grid item xs={12}>
                   <Typography variant="inputTitle">Name</Typography>
@@ -88,6 +113,7 @@ const ContactUs = () => {
                       border: 1,
                     }}
                     label="Abhay Suryawanshi"
+                    name="name"
                     variant="outlined"
                     fullWidth
                     margin="normal"
@@ -107,9 +133,10 @@ const ContactUs = () => {
                     }}
                     label="EMAIL ADDRESS"
                     variant="outlined"
+                    name="email"
                     fullWidth
                     margin="normal"
-                    type="password"
+                    type="email"
                     required
                   />
                 </Grid>
@@ -125,6 +152,7 @@ const ContactUs = () => {
                       boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
                       border: 1,
                     }}
+                    name="desc"
                     label=""
                     variant="outlined"
                     fullWidth
