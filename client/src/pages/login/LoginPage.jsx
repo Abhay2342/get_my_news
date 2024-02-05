@@ -17,8 +17,10 @@ import LinkedInIcon from "../../assets/linkedin.svg";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const LoginPage = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // Handler for login button click
 
   const handleSignUpClick = () => {
@@ -28,9 +30,6 @@ const LoginPage = () => {
   const handleLogoClick = () => {
     navigate("/");
   };
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleUsernameChange = (event) => {
     setEmail(event.target.value);
@@ -43,26 +42,40 @@ const LoginPage = () => {
   };
 
   const handleLoginSubmit = async (event) => {
-    console.log("Start");
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "https://get-my-news-server.onrender.com/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
       if (response.ok) {
-        // Handle successful login, e.g., redirect to a dashboard
-        // navigate("/dashboard");
-        let data = await response.text();
-        console.log(data);
+        // Handle successful login
+        console.log("Login successful");
+
+        // Set user as signed in (you might use a global state management library here)
+        // For example, you can use React context, Redux, or React query
+        // For simplicity, let's assume you have a global context named "AuthContext"
+        // and a function "setUserSignedIn" to update the user's signed-in status
+
+        // Assuming you have a function like setUserSignedIn in your global context
+        // setUserSignedIn(true);
+
+        // For now, you can simulate setting user signed-in status using localStorage
+        localStorage.setItem("isLoggedIn", "true");
+
+        // Navigate to the home page
+        navigate("/");
       } else {
         // Handle unsuccessful login, show an error message, etc.
         console.error("Login failed");

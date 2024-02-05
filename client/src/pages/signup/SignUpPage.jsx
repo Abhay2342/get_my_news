@@ -155,7 +155,7 @@ const SignUpPage = () => {
                 variant="outlined"
                 fullWidth
                 margin="normal"
-                type="text"
+                type="email"
                 required
               />
               <TextField

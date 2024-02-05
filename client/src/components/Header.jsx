@@ -14,10 +14,9 @@ import {
 
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-const Header = () => {
+const Header = ({ isLoggedIn, onSignOut }) => {
+  const navigate = useNavigate();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-
-  const navigate = useNavigate(); // Initialize useNavigate
 
   // Handler for login button click
   const handleLoginClick = () => {
@@ -27,6 +26,14 @@ const Header = () => {
   const handleSignUpClick = () => {
     navigate("/signup");
   };
+
+  const handleSignOutClick = () => {
+    // Perform sign-out logic
+    // For example, update local storage, reset state, etc.
+    localStorage.removeItem("isLoggedIn");
+    onSignOut();
+  };
+
   // Handler for language change
   const handleLanguageChange = (event) => {
     console.log(event.target.value);
@@ -87,16 +94,27 @@ const Header = () => {
 
         {/* Third Column - Login/Signup Buttons with Divider */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button variant="link" onClick={handleLoginClick}>
-            Login
-          </Button>
-
-          <Typography variant="h6" color="primary" component="div">
-            |
-          </Typography>
-          <Button variant="link" onClick={handleSignUpClick}>
-            SignUp
-          </Button>
+          {isLoggedIn ? (
+            // Show sign-out button when logged in
+            <>
+              <Button variant="link" onClick={handleSignOutClick}>
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            // Show login/signup buttons when not logged in
+            <>
+              <Button variant="link" onClick={handleLoginClick}>
+                Login
+              </Button>
+              <Typography variant="h6" color="primary" component="div">
+                |
+              </Typography>
+              <Button variant="link" onClick={handleSignUpClick}>
+                SignUp
+              </Button>
+            </>
+          )}
         </Box>
       </Toolbar>
     </AppBar>
