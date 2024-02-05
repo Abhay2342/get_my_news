@@ -10,22 +10,24 @@ import {
 } from "./pages/settings/SettingsPage";
 import "./App.css";
 import ContactUs from "./pages/contact_us/ContactUs";
-
+import { UserProvider } from "./components/UserContext";
 function App() {
   return (
-    <Router>
-      {/* <Navigation /> */}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/profile-settings" element={<SettingsPage />} />
-        <Route path="/account-settings" element={<SettingsPage />} />
-        {/* Add more routes for other pages */}
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        {/* <Navigation /> */}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/profile-settings" element={<SettingsPage />} />
+          <Route path="/account-settings" element={<SettingsPage />} />
+          {/* Add more routes for other pages */}
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 
