@@ -5,6 +5,7 @@ import news from './controllers/news.mjs';
 import login from './controllers/login.mjs';
 import signup from "./controllers/signup.mjs";
 import user from "./controllers/user.mjs";
+import support from "./controllers/support.mjs";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -38,6 +39,10 @@ app.post("/login", (req, res) => {
 
 app.put("/signup", (req, res) => {
     signup(req, res);
+});
+
+app.put("/support", (req, res) => {
+    support(req, res);
 });
 
 app.patch("/user/update/:uname", (req, res) => {
