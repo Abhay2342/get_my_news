@@ -9,6 +9,7 @@ import {
   SettingsPage,
 } from "./pages/settings/SettingsPage";
 import "./App.css";
+import ContactUs from "./pages/contact_us/ContactUs";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/profile-settings" element={<SettingsPage />} />
         <Route path="/account-settings" element={<SettingsPage />} />
         {/* Add more routes for other pages */}

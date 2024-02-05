@@ -9,17 +9,20 @@ import SouthIcon from "@mui/icons-material/South";
 import AccountSettingsBody from "../../components/SettingsPage/AccountSettingsBody";
 import { useNavigate } from "react-router-dom";
 import coming_soon from "../../assets/coming_soon.png";
+
 const SettingsPage = () => {
   const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const handleCategoryClick = (item) => {
+  const handleCategoryClick = async (item) => {
     console.log(item);
     setSelectedItem(item);
 
-    // Change the URL based on the selected item
+    // Move the navigation logic here, it will be triggered when a category is clicked
     if (item === "ACCOUNT") {
       navigate("/account-settings");
+    } else if (item === "SUPPORT") {
+      navigate("/contact-us");
     } else {
       // If not "ACCOUNT", navigate to the default profile settings URL
       navigate("/profile-settings");
@@ -29,13 +32,22 @@ const SettingsPage = () => {
   useEffect(() => {
     // Set the default selected item to the first item
     setSelectedItem("PROFILE");
+
+    // Call the navigation function here after setting the default value
+    navigateToSelectedCategory();
+  }, []);
+
+  const navigateToSelectedCategory = () => {
+    // Navigation logic based on the selected item
     if (selectedItem === "ACCOUNT") {
       navigate("/account-settings");
+    } else if (selectedItem === "SUPPORT") {
+      navigate("/contact-us");
     } else {
       // If not "ACCOUNT", navigate to the default profile settings URL
       navigate("/profile-settings");
     }
-  }, []);
+  };
 
   const renderSettingsBody = () => {
     if (selectedItem === "PROFILE") {
@@ -54,7 +66,6 @@ const SettingsPage = () => {
     }
 
     // Add more conditions for other items if needed
-    return null;
   };
 
   return (
