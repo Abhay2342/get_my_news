@@ -10,11 +10,14 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [showLoggedInModal, setLoggedInModal] = useState(false);
   const [showApikeyModal, setApikeyModal] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn")
+  );
   const [userData, setUserData] = useState(null);
   const [modalData, setModalData] = useState(null);
   const [modalButton, setModalButton] = useState(null);
-
+  const [newsData, setNewsData] = useState(null);
+  // console.log(JSON.parse(newsData));
   useEffect(() => {
     const checkLoginStatus = () => {
       const storedLoggedInStatus = localStorage.getItem("isLoggedIn");
@@ -46,7 +49,6 @@ const HomePage = () => {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("user");
-    localStorage.removeItem("apiKey");
   };
 
   const handleCreateApiKey = () => {
@@ -64,9 +66,9 @@ const HomePage = () => {
   return (
     <div>
       <Header isLoggedIn={isLoggedIn} onSignOut={handleSignOut} />
-      <HorizontalBar />
+      <HorizontalBar isLoggedIn={isLoggedIn} setNewsData={setNewsData} />
       <CountryCarousel />
-      <Body />
+      <Body newsData={newsData} />
 
       {showLoggedInModal && (
         <Modal

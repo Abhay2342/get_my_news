@@ -14,7 +14,7 @@ import {
 } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 
-const HorizontalBar = () => {
+const HorizontalBar = ({ isLoggedIn, setNewsData }) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedDay, setDay] = useState("01");
   const [selectedMonth, setMonth] = useState("01");
@@ -27,8 +27,9 @@ const HorizontalBar = () => {
 
   const handleAccountClick = () => {
     // navigate("/profile-settings");
-    const storedUserData = localStorage.getItem("isLoggedIn");
-    if (!storedUserData) {
+    const loginStatus = isLoggedIn;
+    console.log(loginStatus);
+    if (!loginStatus) {
       // If not signed in, navigate to the login route
       navigate("/login");
     } else {
@@ -53,7 +54,7 @@ const HorizontalBar = () => {
     setYear(event.target.value);
   };
 
-  const handleDateSubmit = () => {
+  const handleDateSubmit = async () => {
     const maxDays = maxDaysInMonth(Number(selectedMonth), Number(selectedYear));
     const isValidDay = Number(selectedDay) <= maxDays;
 
@@ -61,7 +62,45 @@ const HorizontalBar = () => {
       alert("Please select the correct date.");
     } else {
       setDate(`${selectedYear}-${selectedMonth}-${selectedDay}`);
-      console.log(selectedDate);
+
+      console.log(selectedDay, selectedMonth, selectedYear);
+
+      try {
+        // setLoading(true);
+
+        const response = await fetch("http://localhost:3000/news/date", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            day: selectedDay,
+            month: selectedMonth,
+            year: selectedYear,
+          }),
+        });
+
+        if (response.ok) {
+          const newsData = await response.json();
+
+          // Update user context with email and other user data
+          // loginUser(userData);
+          setNewsData(newsData);
+          console.log(newsData);
+          // console.log(JSON.stringify(userData));
+          // localStorage.setItem("user", JSON.stringify(userData));
+          // localStorage.setItem("isLoggedIn", "true");
+
+          // setLoading(false);
+          // navigate("/profile-settings");
+        } else {
+          console.error("News Failed");
+          // setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error during News:", error);
+        // setLoading(false);
+      }
     }
     // Add logic for valid date
   };

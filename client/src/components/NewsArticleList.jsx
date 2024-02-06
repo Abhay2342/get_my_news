@@ -40,7 +40,7 @@ const NewsArticleList = ({
                     color: selectedArticle === article ? "#F24E1E" : "#3F3A3B",
                   }}
                 >
-                  {article.heading}
+                  {article.title}
                 </div>
 
                 {/* Date */}
@@ -53,7 +53,7 @@ const NewsArticleList = ({
                     marginBottom: "3px",
                   }}
                 >
-                  {article.date}
+                  {article.publish_date}
                 </div>
 
                 {/* Truncated Description */}
@@ -71,7 +71,7 @@ const NewsArticleList = ({
                     WebkitBoxOrient: "vertical",
                   }}
                 >
-                  {article.description}
+                  {article.text}
                 </div>
               </div>
             </ListItem>

@@ -13,7 +13,7 @@ const SelectedArticle = ({ selectedArticle }) => {
       {/* Article Image */}
       <img
         src={selectedArticle.image}
-        alt={selectedArticle.heading}
+        alt={selectedArticle.title}
         style={{
           width: "100%",
           height: "218px",
@@ -39,7 +39,7 @@ const SelectedArticle = ({ selectedArticle }) => {
               fontWeight: 400,
             }}
           >
-            {selectedArticle.date}
+            {selectedArticle.publish_date}
           </Typography>
 
           {/* Heart Icon */}
@@ -57,7 +57,7 @@ const SelectedArticle = ({ selectedArticle }) => {
             marginBottom: "10px",
           }}
         >
-          {selectedArticle.heading}
+          {selectedArticle.title}
         </Typography>
 
         {/* Article Description */}
@@ -69,7 +69,7 @@ const SelectedArticle = ({ selectedArticle }) => {
             fontSize: "1.1rem",
           }}
         >
-          {selectedArticle.description}
+          {selectedArticle.text}
         </Typography>
       </div>
     </div>
