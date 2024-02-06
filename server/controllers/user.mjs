@@ -29,7 +29,7 @@ const PATCH = async (req, res) => {
 
 const UPDATE = async (req, res) => {
     let uname = req.params.uname;
-    let { fname, lname, gender, age, about, avatar } = req.body;
+    let { fname, lname, gender, age, about, avatar, apikey } = req.body;
 
     const collection = db.collection("users");
 
@@ -72,7 +72,8 @@ const UPDATE = async (req, res) => {
                 },
             }
         );
-        res.status(200).send("User updated");
+        const newUserData = await collection.findOne({ uname: uname });
+        res.status(200).send(newUserData);
     }
 };
 

@@ -1,5 +1,5 @@
 // CategoryList.js
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Avatar,
   Grid,
@@ -8,13 +8,13 @@ import {
   TextField,
   Link,
 } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-
+import { useState } from "react";
 const AccountSettingsBody = ({}) => {
+  // let userData = JSON.parse(localStorage.getItem("user"));
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -26,9 +26,9 @@ const AccountSettingsBody = ({}) => {
     console.log(formData);
     try {
       const response = await fetch(
-        "http://localhost:3000//user/update/:uname",
+        `http://localhost:3000/user/update/abhay2342`,
         {
-          method: "PUT",
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
@@ -36,20 +36,24 @@ const AccountSettingsBody = ({}) => {
         }
       );
 
-      console.log("Support response:", response);
+      console.log("response:", response);
 
       if (response.ok) {
-        // Handle successful sign-up, e.g., redirect to a confirmation page
-        console.log("Ticket Created");
-        // navigate("/login");
+        let newData = await response.json();
+        newData = JSON.stringify(newData);
+        localStorage.setItem("user", newData);
+        // userData = await JSON.parse(userData);
+        // localStorage.setItem("user", userData);
+        setUserData(JSON.parse(newData));
+        console.log("Details Updated");
       } else {
         // Handle unsuccessful sign-up, show an error message, etc.
-        console.error("Ticket Creation failed");
+        console.error("User Updation failed");
         let data = await response.text();
         console.log(data);
       }
     } catch (error) {
-      console.error("Error during Ticket Creation:", error);
+      console.error("Error during details updation:", error);
     }
   };
 
@@ -86,8 +90,8 @@ const AccountSettingsBody = ({}) => {
                 variant="outlined"
                 fullWidth
                 margin="normal"
-                type="text"
-                required
+                type="password"
+                name="curr_pass"
               />
             </Grid>
 
@@ -104,8 +108,8 @@ const AccountSettingsBody = ({}) => {
                 variant="outlined"
                 fullWidth
                 margin="normal"
-                type="text"
-                required
+                type="pass"
+                name="new_pass"
               />
             </Grid>
           </Grid>
@@ -141,8 +145,8 @@ const AccountSettingsBody = ({}) => {
                 variant="outlined"
                 fullWidth
                 margin="normal"
-                type="text"
-                required
+                type="email"
+                name="new_email"
               />
             </Grid>
           </Grid>
@@ -158,12 +162,13 @@ const AccountSettingsBody = ({}) => {
                 boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
                 border: 1,
               }}
-              label="* * * * * * * * * * * * * *"
+              // label={userData.apikey}
+              defaultValue={userData.apikey}
               variant="outlined"
               fullWidth
               margin="normal"
               type="text"
-              required
+              name="apikey"
             />
           </Grid>
           <Grid item container justifyContent={"space-between"}>
@@ -219,6 +224,7 @@ const AccountSettingsBody = ({}) => {
             <Button
               // onClick={handleDateSubmit}
               variant="contained"
+              type="submit"
               sx={{
                 backgroundColor: "#F24E1E",
                 fontFamily: "Inika",
