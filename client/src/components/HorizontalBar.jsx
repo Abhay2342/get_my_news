@@ -26,7 +26,15 @@ const HorizontalBar = () => {
   // Handler for login button click
 
   const handleAccountClick = () => {
-    navigate("/profile-settings");
+    // navigate("/profile-settings");
+    const storedUserData = localStorage.getItem("isLoggedIn");
+    if (!storedUserData) {
+      // If not signed in, navigate to the login route
+      navigate("/login");
+    } else {
+      // If signed in, navigate to the profile settings page
+      navigate("/profile-settings");
+    }
   };
 
   const maxDaysInMonth = (month, year) => {

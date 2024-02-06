@@ -7,17 +7,14 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import { CssBaseline } from "@mui/material/";
 import "./global.css";
-import { UserProvider } from "./components/UserContext";
 
 const root = document.getElementById("root");
 const reactRoot = createRoot(root);
 reactRoot.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <UserProvider>
-        <CssBaseline />
-        <App />
-      </UserProvider>
+      <CssBaseline />
+      <App />
     </ThemeProvider>
   </React.StrictMode>
 );

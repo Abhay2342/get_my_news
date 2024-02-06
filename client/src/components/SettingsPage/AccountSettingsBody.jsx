@@ -175,8 +175,10 @@ const AccountSettingsBody = ({}) => {
                   //   onClick={}
                 >
                   <Link
-                    href="/login"
+                    href="https://apilayer.com/marketplace/world_news-api"
                     color="inherit"
+                    rel="noopener"
+                    target="_blank"
                     sx={{ color: "inherit", textDecoration: "underline" }}
                   >
                     Click{" "}
