@@ -10,9 +10,9 @@ import AccountSettingsBody from "../../components/SettingsPage/AccountSettingsBo
 import { useNavigate } from "react-router-dom";
 import coming_soon from "../../assets/coming_soon.png";
 
-const SettingsPage = () => {
+const SettingsPage = ({ path }) => {
   const navigate = useNavigate();
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(path);
 
   const handleCategoryClick = async (item) => {
     console.log(item);
@@ -31,7 +31,7 @@ const SettingsPage = () => {
 
   useEffect(() => {
     // Set the default selected item to the first item
-    setSelectedItem("PROFILE");
+    setSelectedItem(selectedItem);
 
     // Call the navigation function here after setting the default value
     navigateToSelectedCategory();
@@ -75,7 +75,7 @@ const SettingsPage = () => {
         <Grid item container xs={11} paddingLeft={"8rem"}>
           <Grid item container>
             <Grid item container alignContent={"center"} xs={12}>
-              <BasicBreadcrumbs />
+              <BasicBreadcrumbs selectedItem={selectedItem} />
             </Grid>
 
             <Grid item container>

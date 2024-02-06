@@ -1,39 +1,61 @@
-// src/pages/HomePage.jsx
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import HorizontalBar from "../../components/HorizontalBar";
 import Body from "../../components/Body";
 import CountryCarousel from "../../components/CountryCarousel";
-import Modal from "../../components/Modal"; // Import your modal component
-import { useState, useEffect } from "react";
+import Modal from "../../components/Modal";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../components/UserContext";
-// ... (your imports)
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const { isLoggedIn, logoutUser } = useUser();
+  const [showLoggedInModal, setLoggedInModal] = useState(false);
+  const [showApikeyModal, setApikeyModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [modalData, setModalData] = useState(null);
+  const [modalButton, setModalButton] = useState(null);
+
   useEffect(() => {
-    // Simulate checking user login status (replace this with actual authentication logic)
+    const checkLoginStatus = () => {
+      const storedLoggedInStatus = localStorage.getItem("isLoggedIn");
+      const initialLoggedInStatus = storedLoggedInStatus === "true";
+      setIsLoggedIn(initialLoggedInStatus);
+    };
+
+    checkLoginStatus();
+
+    // Check if the user has an API key
+    const storedData = localStorage.getItem("user");
+    setUserData(storedData);
 
     const timeoutId = setTimeout(() => {
       if (!isLoggedIn) {
-        setShowModal(true);
+        setModalData("You are not signed in. Redirecting to the login page...");
+        setModalButton("Close");
+        setLoggedInModal(true);
+      } else if (!userData.apikey) {
+        setModalData("API key is missing. Please create an API key.");
+        setModalButton("Create ApiKey");
+        setApikeyModal(true);
       }
-    }, 10000);
+    }, 5000);
 
     return () => clearTimeout(timeoutId);
   }, [isLoggedIn]);
 
   const handleSignOut = () => {
-    logoutUser();
-    // Additional logic if needed upon sign-out
+    setIsLoggedIn(false);
+    localStorage.removeItem("user");
+    localStorage.removeItem("apiKey");
+  };
+
+  const handleCreateApiKey = () => {
+    // You can navigate the user to the account settings page to create an API key
+    navigate("/account-settings");
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setLoggedInModal(false);
     if (!isLoggedIn) {
       navigate("/login");
     }
@@ -46,10 +68,19 @@ const HomePage = () => {
       <CountryCarousel />
       <Body />
 
-      {showModal && (
-        <Modal onClose={handleCloseModal}>
-          <p>You are not signed in. Redirecting to the login page...</p>
-        </Modal>
+      {showLoggedInModal && (
+        <Modal
+          onClose={handleCloseModal}
+          modalData={modalData}
+          modalButton={modalButton}
+        ></Modal>
+      )}
+      {showApikeyModal && (
+        <Modal
+          onClose={handleCreateApiKey}
+          modalData={modalData}
+          modalButton={modalButton}
+        ></Modal>
       )}
     </div>
   );

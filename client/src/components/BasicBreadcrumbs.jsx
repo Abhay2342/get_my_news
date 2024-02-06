@@ -1,17 +1,26 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Link from "@mui/material/Link";
-import { useUser } from "./UserContext"; // Adjust the path accordingly
 
 function handleClick(event) {
   event.preventDefault();
   console.info("You clicked a breadcrumb.");
 }
 
-export default function BasicBreadcrumbs() {
-  const { user } = useUser();
+const BasicBreadcrumbs = ({ selectedItem }) => {
+  const [user, setUserData] = useState(null);
+
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const storedUserData = localStorage.getItem("user");
+      setUserData(JSON.parse(storedUserData));
+    };
+
+    checkLoginStatus();
+  }, []); // Empty dependency array to run once on mount
 
   return (
     <div role="presentation" onClick={handleClick}>
@@ -33,9 +42,11 @@ export default function BasicBreadcrumbs() {
           color="inherit"
           href="/material-ui/getting-started/installation/"
         >
-          <Typography variant="filter">Edit Profile</Typography>
+          <Typography variant="filter">{selectedItem}</Typography>
         </Link>
       </Breadcrumbs>
     </div>
   );
-}
+};
+
+export default BasicBreadcrumbs;

@@ -17,15 +17,11 @@ import GoogleIcon from "../../assets/google.svg";
 import TwitterIcon from "../../assets/twitter.svg";
 import LinkedInIcon from "../../assets/linkedin.svg";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { useUser } from "../../components/UserContext";
+// import { useUser } from "../../components/UserContext";
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { user, loginUser, isLoggedIn } = useUser(); // Destructure user and loginUser from useUser
+  // const { user, loginUser } = useUser(); // Destructure user and loginUser from useUser
 
-  // Check if the user is already authenticated
-  if (isLoggedIn) {
-    navigate("/"); // Redirect to the home page
-  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false); // State to manage loading spinner
@@ -68,7 +64,11 @@ const LoginPage = () => {
         const userData = await response.json();
 
         // Update user context with email and other user data
-        loginUser(userData);
+        // loginUser(userData);
+        // console.log(userData);
+        // console.log(JSON.stringify(userData));
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("isLoggedIn", "true");
 
         setLoading(false);
         navigate("/profile-settings");
