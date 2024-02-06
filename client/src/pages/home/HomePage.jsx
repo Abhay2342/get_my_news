@@ -25,7 +25,7 @@ const HomePage = () => {
     checkLoginStatus();
 
     // Check if the user has an API key
-    const storedData = localStorage.getItem("user");
+    const storedData = JSON.parse(localStorage.getItem("user"));
     setUserData(storedData);
 
     const timeoutId = setTimeout(() => {
