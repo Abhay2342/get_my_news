@@ -9,12 +9,13 @@ import img1 from "../assets/article1.png";
 import img2 from "../assets/article2.png";
 import img3 from "../assets/article3.png";
 
-const newsArticles = [
-  {
-    image: img1,
-    heading: "ECONOMIC CRISIS ON PEAK",
-    date: "24-05-2023",
-    description: `In recent times, the world has witnessed an alarming surge in economic crises, pushing nations to the brink of financial instability. The term "economic crisis" refers to a severe and sustained downturn in the economic performance of a country, characterized by a contraction in economic activity, rising unemployment rates, and financial distress across various sectors. This article delves into the factors contributing to the current economic crisis, its widespread implications, and potential strategies for recovery.
+const newsArticles = {
+  news: [
+    {
+      image: img1,
+      title: "ECONOMIC CRISIS ON PEAK",
+      publish_date: "24-05-2023",
+      text: `In recent times, the world has witnessed an alarming surge in economic crises, pushing nations to the brink of financial instability. The term "economic crisis" refers to a severe and sustained downturn in the economic performance of a country, characterized by a contraction in economic activity, rising unemployment rates, and financial distress across various sectors. This article delves into the factors contributing to the current economic crisis, its widespread implications, and potential strategies for recovery.
 
     Causes of the Economic Crisis:
     Several factors can contribute to the escalation of an economic crisis. These may include:
@@ -53,61 +54,33 @@ const newsArticles = [
     
     Conclusion:
     While navigating an economic crisis is undoubtedly challenging, it also presents an opportunity for introspection and reform. Governments, businesses, and individuals must work together to implement strategic measures that promote resilience, inclusivity, and sustainable economic growth. By learning from past crises and adopting proactive strategies, nations can not only recover from the current economic challenges but also build a more robust and adaptive economic framework for the future.`,
-  },
-  {
-    image: img2,
-    heading: "BLACK LIFE UNTOLD STORIES",
-    date: "19-02-2020",
-    description:
-      "Black Lives Matter is a movement advocating for the rights and equality of Black individuals, challenging systemic racism and injustice.",
-  },
-  {
-    image: img3,
-    heading: "SUDDEN RISE IN CYBER CRIME",
-    date: "19-02-2020",
-    description:
-      "The surge in cybercrime demands heightened security and increased public awareness to combat unauth access, data breaches, and online fraud.",
-  },
-  {
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
-    heading: "Top Heading for Article 4",
-    date: "20-05-2022",
-    description: "Small Description for Article 4",
-  },
-  {
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
-    heading: "Top Heading for Article 5",
-    date: "Date for Article 5",
-    description: "Small Description for Article 5",
-  },
-  {
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
-    heading: "Top Heading for Article 6",
-    date: "Date for Article 6",
-    description: "Small Description for Article 6",
-  },
-  // Add 6 more articles
-  {
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
-    heading: "Top Heading for Article 7",
-    date: "Date for Article 7",
-    description: "Small Description for Article 7",
-  },
-];
+    },
+    {
+      image: img2,
+      title: "BLACK LIFE UNTOLD STORIES",
+      publish_date: "19-02-2020",
+      text: "Black Lives Matter is a movement advocating for the rights and equality of Black individuals, challenging systemic racism and injustice.",
+    },
+    {
+      image: img3,
+      title: "SUDDEN RISE IN CYBER CRIME",
+      publish_date: "19-02-2020",
+      text: "The surge in cybercrime demands heightened security and increased public awareness to combat unauth access, data breaches, and online fraud.",
+    },
+  ],
+};
 
-const Body = () => {
+const Body = ({ newsData }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
-
+  if (newsData === null) {
+    newsData = newsArticles;
+  }
   const handleCategoryClick = (item) => {
     console.log(item);
     setSelectedItem(item);
     // Reset selected article when a new category is clicked
-    setSelectedArticle(newsArticles[0]);
+    setSelectedArticle(newsData.news[0]);
   };
 
   const handleArticleClick = (article) => {
@@ -119,7 +92,7 @@ const Body = () => {
     // Set the default selected item to the first item
     setSelectedItem("All");
     // Set the default selected article to the first article
-    setSelectedArticle(newsArticles[0]);
+    setSelectedArticle(newsData.news[0]);
   }, []);
 
   return (
@@ -146,7 +119,7 @@ const Body = () => {
       />
       <Grid item xs={3} justifyContent="center">
         <NewsArticleList
-          newsArticles={newsArticles}
+          newsArticles={newsData.news}
           handleArticleClick={handleArticleClick}
           selectedArticle={selectedArticle}
         />

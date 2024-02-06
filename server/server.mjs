@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
     res.send("Running 3000");
 });
 
-app.get("/news/date", (req, res) => {
+app.post("/news/date", (req, res) => {
     news.date(req, res);
 });
 

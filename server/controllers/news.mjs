@@ -6,7 +6,9 @@ dotenv.config();
 const date = async (req, res) => {
     let { day, month, year } = req.body;
     let e_date = `${year}-${month}-${day}`;
-    let l_date = `${year}-${month}-${day + 1}`;
+    let l_date = `${year}-${month}-${(Number(day)) + 1}`;
+    console.log(e_date)
+    console.log(l_date)
     const myHeaders = new Headers();
     myHeaders.append("apikey", process.env.NEWS_API);
 
@@ -16,12 +18,13 @@ const date = async (req, res) => {
         headers: myHeaders
     };
     const num = 5;
-    const url = `https://api.apilayer.com/world_news/search-news?source-countries=in&number=${num}&earliest-publish-date=${e_date}&latest-publish-date=${l_date}`;
+    const url = `https://api.apilayer.com/world_news/search-news?source-countries=in&number=${num}&earliest-publish-date=${e_date}`;
 
     try {
         const response = await fetch(url, requestOptions);
         const data = await response.json();
-        res.json(data);
+        // console.log(da)
+        res.status(200).send(data);
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).json({ error: 'Internal Server Error' });

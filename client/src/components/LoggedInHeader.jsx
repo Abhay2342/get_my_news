@@ -20,8 +20,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const LoggedInHeader = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
-
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Handler for login button click
@@ -35,6 +33,12 @@ const LoggedInHeader = () => {
 
   const handleContactUsClick = () => {
     navigate("/contact-us");
+  };
+
+  const handleSignOutClick = () => {
+    localStorage.setItem("isLoggedIn", false);
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
   return (
@@ -100,10 +104,9 @@ const LoggedInHeader = () => {
         {/* Third Column - Login/Signup Buttons with Divider */}
         <Grid item container xs={1} justifyContent={"flex-end"}>
           <Grid item sx={{ lineHeight: 0 }}>
-            <AccountCircleIcon
-              color="primary"
-              sx={{ cursor: "pointer", fontSize: "30px" }}
-            />
+            <Button variant="link" onClick={handleSignOutClick}>
+              Sign Out
+            </Button>
           </Grid>
         </Grid>
       </Toolbar>
