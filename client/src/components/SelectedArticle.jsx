@@ -30,7 +30,7 @@ const SelectedArticle = ({ selectedArticle, isLoggedIn }) => {
       // setLoading(true);
       console.log("Category Search");
       const response = await fetch(
-        `http://localhost:3000/user/uname/collection`,
+        `https://get-my-news-server.onrender.com/user/uname/collection`,
         {
           method: "PUT",
           headers: {
