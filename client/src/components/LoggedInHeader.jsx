@@ -15,8 +15,6 @@ import {
   Divider,
 } from "@mui/material/";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const LoggedInHeader = () => {
@@ -38,6 +36,7 @@ const LoggedInHeader = () => {
   const handleSignOutClick = () => {
     localStorage.setItem("isLoggedIn", false);
     localStorage.removeItem("user");
+    localStorage.removeItem("userCollection");
     navigate("/");
   };
 

@@ -1,16 +1,81 @@
-// SelectedArticle.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-const SelectedArticle = ({ selectedArticle }) => {
+const SelectedArticle = ({ selectedArticle, isLoggedIn }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [userCollection, setUserCollection] = useState(
+    JSON.parse(localStorage.getItem("userCollection")) || []
+  );
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+
+  useEffect(() => {
+    if (isLoggedIn && selectedArticle) {
+      const isArticleLiked = userCollection.some(
+        (article) => article.title === selectedArticle.title
+      );
+      setIsLiked(isArticleLiked);
+    } else {
+      setIsLiked(false);
+    }
+  }, [isLoggedIn, selectedArticle, userCollection]);
+
+  const handleLikeButton = async () => {
+    setIsLiked(!isLiked);
+
+    try {
+      // setLoading(true);
+      console.log("Category Search");
+      const response = await fetch(
+        `http://localhost:3000/user/uname/collection`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: userData.email,
+            newsArticle: selectedArticle,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const newData = await response.json();
+
+        // Update user context with email and other user data
+        // loginUser(userData);
+        // setNewsData(newsData);
+        // console.log(response);
+        // console.log(JSON.stringify(userData));
+        localStorage.setItem(
+          "userCollection",
+          JSON.stringify(newData.collection)
+        );
+        setUserCollection(JSON.parse(localStorage.getItem("userCollection")));
+
+        // localStorage.setItem("isLoggedIn", "true");
+
+        // setLoading(false);
+        // navigate("/profile-settings");
+      } else {
+        console.error("News Failed");
+        // setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error during News:", error);
+      // setLoading(false);
+    }
+  };
   if (!selectedArticle) {
     return null;
   }
 
   return (
     <div style={{ padding: "20px", height: "80vh", overflowY: "auto" }}>
-      {/* Article Image */}
       <img
         src={selectedArticle.image}
         alt={selectedArticle.title}
@@ -21,9 +86,7 @@ const SelectedArticle = ({ selectedArticle }) => {
         }}
       />
 
-      {/* Article Details */}
       <div style={{ width: "100%" }}>
-        {/* Date and Heart Icon */}
         <div
           style={{
             display: "flex",
@@ -31,7 +94,6 @@ const SelectedArticle = ({ selectedArticle }) => {
             alignItems: "center",
           }}
         >
-          {/* Date */}
           <Typography
             variant="subtitle2"
             style={{
@@ -42,13 +104,11 @@ const SelectedArticle = ({ selectedArticle }) => {
             {selectedArticle.publish_date}
           </Typography>
 
-          {/* Heart Icon */}
-          <IconButton style={{ marginLeft: "auto" }}>
-            <FavoriteBorderIcon />
+          <IconButton onClick={handleLikeButton} style={{ marginLeft: "auto" }}>
+            {isLiked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
           </IconButton>
         </div>
 
-        {/* Article Title */}
         <Typography
           variant="title"
           style={{
@@ -60,7 +120,6 @@ const SelectedArticle = ({ selectedArticle }) => {
           {selectedArticle.title}
         </Typography>
 
-        {/* Article Description */}
         <Typography
           style={{
             whiteSpace: "pre-line",

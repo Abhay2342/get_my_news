@@ -20,40 +20,7 @@ const newsArticles = {
     Causes of the Economic Crisis:
     Several factors can contribute to the escalation of an economic crisis. These may include:
     
-    Global Shocks: Events with global repercussions, such as the COVID-19 pandemic, can significantly impact economies worldwide. Supply chain disruptions, travel restrictions, and lockdowns have led to a decline in production and consumption.
-    
-    Financial Instabilities: A collapse in financial markets, triggered by factors like excessive speculation, over-leveraging, or banking system failures, can contribute to an economic downturn.
-    
-    Political and Geopolitical Uncertainties: Political instability and geopolitical tensions can create an environment of uncertainty, deterring investments and affecting economic growth.
-    
-    Trade Imbalances: Persistent trade deficits or surpluses can strain a country's economic health, affecting currency values and trade relationships.
-    
-    Implications of the Economic Crisis:
-    The repercussions of an economic crisis are far-reaching and can impact various aspects of society:
-    
-    Unemployment: High unemployment rates are a common consequence of economic downturns, leading to increased financial hardships for individuals and families.
-    
-    Poverty and Inequality: Economic crises often exacerbate existing inequalities, pushing vulnerable populations further into poverty.
-    
-    Business Failures: Many businesses, particularly small enterprises, may struggle to survive during economic crises, leading to closures and job losses.
-    
-    Government Interventions: Governments may need to implement stimulus packages and interventions to stabilize the economy, leading to increased public debt.
-    
-    Strategies for Recovery:
-    Addressing an economic crisis requires a comprehensive and multi-faceted approach:
-    
-    Fiscal Policies: Governments can implement fiscal policies, such as tax cuts and increased government spending, to stimulate demand and support economic recovery.
-    
-    Monetary Policies: Central banks can adjust interest rates and implement monetary policies to control inflation, encourage borrowing, and stabilize financial markets.
-    
-    Structural Reforms: Structural reforms in areas like labor markets, education, and healthcare can enhance a country's long-term economic resilience.
-    
-    International Cooperation: Collaborative efforts between nations can contribute to global economic stability. Coordinated policies and trade agreements can facilitate recovery on a broader scale.
-    
-    Innovation and Technology: Embracing innovation and technology can drive productivity and create new economic opportunities, fostering long-term growth.
-    
-    Conclusion:
-    While navigating an economic crisis is undoubtedly challenging, it also presents an opportunity for introspection and reform. Governments, businesses, and individuals must work together to implement strategic measures that promote resilience, inclusivity, and sustainable economic growth. By learning from past crises and adopting proactive strategies, nations can not only recover from the current economic challenges but also build a more robust and adaptive economic framework for the future.`,
+ `,
     },
     {
       image: img2,
@@ -70,15 +37,50 @@ const newsArticles = {
   ],
 };
 
-const Body = ({ newsData }) => {
+const Body = ({ newsData, setNewsData, isLoggedIn }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
   if (newsData === null) {
     newsData = newsArticles;
   }
-  const handleCategoryClick = (item) => {
+  const handleCategoryClick = async (item) => {
     console.log(item);
     setSelectedItem(item);
+
+    try {
+      // setLoading(true);
+      console.log("Category Search");
+      const response = await fetch(
+        `https://get-my-news-server.onrender.com/news/category/${selectedItem}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const newsData = await response.json();
+
+        // Update user context with email and other user data
+        // loginUser(userData);
+        setNewsData(newsData);
+        console.log(newsData);
+        // console.log(JSON.stringify(userData));
+        // localStorage.setItem("user", JSON.stringify(userData));
+        // localStorage.setItem("isLoggedIn", "true");
+
+        // setLoading(false);
+        // navigate("/profile-settings");
+      } else {
+        console.error("News Failed");
+        // setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error during News:", error);
+      // setLoading(false);
+    }
     // Reset selected article when a new category is clicked
     setSelectedArticle(newsData.news[0]);
   };
@@ -106,6 +108,7 @@ const Body = ({ newsData }) => {
     >
       <Grid item xs={2} justifyContent="center">
         <CategoryList
+          newsData={newsData}
           selectedItem={selectedItem}
           handleCategoryClick={handleCategoryClick}
         />
@@ -132,7 +135,10 @@ const Body = ({ newsData }) => {
         flexItem
       />
       <Grid item xs={6} justifyContent="center">
-        <SelectedArticle selectedArticle={selectedArticle} />
+        <SelectedArticle
+          selectedArticle={selectedArticle}
+          isLoggedIn={isLoggedIn}
+        />
       </Grid>
       <Divider
         orientation="vertical"

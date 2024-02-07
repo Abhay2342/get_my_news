@@ -66,9 +66,17 @@ const HomePage = () => {
   return (
     <div>
       <Header isLoggedIn={isLoggedIn} onSignOut={handleSignOut} />
-      <HorizontalBar isLoggedIn={isLoggedIn} setNewsData={setNewsData} />
+      <HorizontalBar
+        isLoggedIn={isLoggedIn}
+        setNewsData={setNewsData}
+        userData={userData}
+      />
       <CountryCarousel />
-      <Body newsData={newsData} />
+      <Body
+        newsData={newsData}
+        setNewsData={setNewsData}
+        isLoggedIn={isLoggedIn}
+      />
 
       {showLoggedInModal && (
         <Modal

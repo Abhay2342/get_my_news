@@ -1,11 +1,11 @@
-// CategoryList.js
-import React from "react";
+import React, { useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Badge from "@mui/material/Badge";
+import CircularProgress from "@mui/material/CircularProgress";
 
-const CategoryList = ({ selectedItem, handleCategoryClick }) => {
+const CategoryList = ({ newsData, selectedItem, handleCategoryClick }) => {
   const categories = [
     "All",
     "LATEST NEWS",
@@ -20,11 +20,21 @@ const CategoryList = ({ selectedItem, handleCategoryClick }) => {
     "EDUCATION",
     "RELIGION",
   ];
+  const [loadingCategory, setLoadingCategory] = useState(false);
+
+  const handleCategoryItemClick = async (category) => {
+    setLoadingCategory(true);
+    await handleCategoryClick(category);
+    setLoadingCategory(false);
+  };
 
   return (
     <List>
       {categories.map((category) => (
-        <ListItem key={category} onClick={() => handleCategoryClick(category)}>
+        <ListItem
+          key={category}
+          onClick={() => handleCategoryItemClick(category)}
+        >
           <ListItemButton
             sx={{
               lineHeight: "0px",
@@ -38,11 +48,17 @@ const CategoryList = ({ selectedItem, handleCategoryClick }) => {
             {category}
           </ListItemButton>
           {selectedItem === category && (
-            <Badge
-              color="error"
-              variant="dot"
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            />
+            <>
+              {loadingCategory ? (
+                <CircularProgress size={12} />
+              ) : (
+                <Badge
+                  color="error"
+                  variant="dot"
+                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                />
+              )}
+            </>
           )}
         </ListItem>
       ))}

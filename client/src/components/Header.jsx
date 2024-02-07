@@ -31,6 +31,8 @@ const Header = ({ isLoggedIn, onSignOut }) => {
     // Perform sign-out logic
     // For example, update local storage, reset state, etc.
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+    localStorage.removeItem("userCollection");
     onSignOut();
   };
 
