@@ -57,6 +57,14 @@ app.delete("/user/delete/:uname", (req, res) => {
     user.DELETE(req, res);
 });
 
+app.put("/user/uname/collection", (req, res) => {
+    user.addNews(req, res);
+});
+
+app.get("/user/uname/collection", (req, res) => {
+    user.getNews(req, res);
+});
+
 app.listen(port, () => {
     console.log(`app is on port ${port}`);
 });

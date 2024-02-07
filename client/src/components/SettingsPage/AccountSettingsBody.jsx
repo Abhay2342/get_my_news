@@ -26,7 +26,7 @@ const AccountSettingsBody = ({}) => {
     console.log(formData);
     try {
       const response = await fetch(
-        `http://localhost:3000/user/update/abhay2342`,
+        `http://localhost:3000/user/update/${userData.uname}`,
         {
           method: "PATCH",
           headers: {

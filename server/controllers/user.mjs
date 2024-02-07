@@ -108,7 +108,67 @@ const DELETE = async (req, res) => {
     }
 };
 
+const addNews = async (req, res) => {
+    let { newsArticle, email } = req.body;
+
+    const collection = db.collection("collection");
+
+    try {
+        // Check if the user already exists
+        const existingEntry = await collection.findOne({
+            email: email,
+            collection: newsArticle
+        });
+
+        if (existingEntry !== null) {
+            await collection.updateOne({ email: email },
+                { $pull: { collection: newsArticle } });
+        } else {
+            await collection.updateOne({ email: email },
+                { $push: { collection: newsArticle } });
+        }
+
+        // Fetch the updated data
+        const newData = await collection.findOne({ email });
+
+        res.status(201).send(newData);
+    } catch (error) {
+        console.error("Error during addition:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
+
+const getNews = async (req, res) => {
+    let { newsArticle, email } = req.body;
+
+    const collection = db.collection("collection");
+
+    try {
+        // Check if the user already exists
+        const UserCollection = await collection.findOne({ email });
+
+        // if (existingUser) {
+        //     res.status(400).send("User already exists");
+        //     return;
+        // }
+
+        // Hash the password before storing it
+        // const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert the new user with the hashed password
+        // await collection.updateOne({ email: email },
+            // { $push: { collection: newsArticle } });
+
+        res.status(201).send(UserCollection);
+    } catch (error) {
+        console.error("Error during addition:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
 export default {
+    addNews,
     GET,
     UPDATE,
     PATCH,

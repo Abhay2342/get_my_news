@@ -36,13 +36,17 @@ const SignUpPage = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:3000/signup", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formObject),
-      });
+      const response = await fetch(
+        "https://get-my-news-server.onrender.com/signup",
+        // "http://localhost:3000/signup",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formObject),
+        }
+      );
 
       console.log("Sign Up response:", response);
 

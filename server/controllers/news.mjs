@@ -4,13 +4,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const date = async (req, res) => {
-    let { day, month, year } = req.body;
+    let { day, month, year, apiKey } = req.body;
     let e_date = `${year}-${month}-${day}`;
-    let l_date = `${year}-${month}-${(Number(day)) + 1}`;
     console.log(e_date)
-    console.log(l_date)
     const myHeaders = new Headers();
-    myHeaders.append("apikey", process.env.NEWS_API);
+    myHeaders.append("apikey", apiKey);
 
     const requestOptions = {
         method: 'GET',
@@ -18,7 +16,7 @@ const date = async (req, res) => {
         headers: myHeaders
     };
     const num = 5;
-    const url = `https://api.apilayer.com/world_news/search-news?source-countries=in&number=${num}&earliest-publish-date=${e_date}`;
+    const url = `https://api.apilayer.com/world_news/search-news?number=${num}&latest-publish-date=${e_date}&language=en&source-countries=in`;
 
     try {
         const response = await fetch(url, requestOptions);

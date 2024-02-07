@@ -11,22 +11,21 @@ import {
   AppBar,
   Toolbar,
   Divider,
+  CircularProgress,
 } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
-
-const HorizontalBar = ({ isLoggedIn, setNewsData }) => {
+const HorizontalBar = ({ isLoggedIn, setNewsData, userData }) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedDay, setDay] = useState("01");
   const [selectedMonth, setMonth] = useState("01");
   const [selectedYear, setYear] = useState("2024");
   const [selectedDate, setDate] = useState("2024-01-01");
   const [isSearchBarVisible, setSearchBarVisibility] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loading spinner
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Handler for login button click
-
   const handleAccountClick = () => {
-    // navigate("/profile-settings");
     const loginStatus = isLoggedIn;
     console.log(loginStatus);
     if (!loginStatus) {
@@ -55,54 +54,49 @@ const HorizontalBar = ({ isLoggedIn, setNewsData }) => {
   };
 
   const handleDateSubmit = async () => {
+    setLoading(true); // Show loading spinner
     const maxDays = maxDaysInMonth(Number(selectedMonth), Number(selectedYear));
     const isValidDay = Number(selectedDay) <= maxDays;
 
     if (!isValidDay) {
       alert("Please select the correct date.");
+      setLoading(false); // Hide loading spinner
     } else {
       setDate(`${selectedYear}-${selectedMonth}-${selectedDay}`);
 
       console.log(selectedDay, selectedMonth, selectedYear);
 
       try {
-        // setLoading(true);
-
-        const response = await fetch("http://localhost:3000/news/date", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            day: selectedDay,
-            month: selectedMonth,
-            year: selectedYear,
-          }),
-        });
+        const response = await fetch(
+          "https://get-my-news-server.onrender.com/news/date",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              day: selectedDay,
+              month: selectedMonth,
+              year: selectedYear,
+              apiKey: userData.apikey,
+            }),
+          }
+        );
 
         if (response.ok) {
           const newsData = await response.json();
 
-          // Update user context with email and other user data
-          // loginUser(userData);
           setNewsData(newsData);
           console.log(newsData);
-          // console.log(JSON.stringify(userData));
-          // localStorage.setItem("user", JSON.stringify(userData));
-          // localStorage.setItem("isLoggedIn", "true");
-
-          // setLoading(false);
-          // navigate("/profile-settings");
         } else {
           console.error("News Failed");
-          // setLoading(false);
         }
       } catch (error) {
         console.error("Error during News:", error);
-        // setLoading(false);
+      } finally {
+        setLoading(false); // Hide loading spinner
       }
     }
-    // Add logic for valid date
   };
 
   const handleSearchClick = () => {
@@ -111,7 +105,6 @@ const HorizontalBar = ({ isLoggedIn, setNewsData }) => {
     }
     setSearchBarVisibility(!isSearchBarVisible);
   };
-
   const monthNames = [
     "January",
     "February",
@@ -183,78 +176,88 @@ const HorizontalBar = ({ isLoggedIn, setNewsData }) => {
             color="#3F3A3B"
             flexItem
           />
-          <Grid item>
-            <Select
-              disableUnderline
-              label="Date"
-              variant="standard"
-              sx={{ border: "none" }}
-              value={selectedDay}
-              onChange={handleDayChange}
-            >
-              {[...Array(31)].map((_, index) => (
-                <MenuItem
-                  key={index + 1}
-                  value={(index + 1).toString().padStart(2, "0")}
+          {/* Add loading spinner and text */}
+          {loading ? (
+            <Grid item>
+              <CircularProgress size={24} />
+              <Typography variant="caption">Please wait...</Typography>
+            </Grid>
+          ) : (
+            <>
+              <Grid item>
+                <Select
+                  disableUnderline
+                  label="Date"
+                  variant="standard"
+                  sx={{ border: "none" }}
+                  value={selectedDay}
+                  onChange={handleDayChange}
                 >
-                  {(index + 1).toString().padStart(2, "0")}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
+                  {[...Array(31)].map((_, index) => (
+                    <MenuItem
+                      key={index + 1}
+                      value={(index + 1).toString().padStart(2, "0")}
+                    >
+                      {(index + 1).toString().padStart(2, "0")}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
 
-          <Divider
-            orientation="vertical"
-            sx={{ borderRightWidth: 2, marginX: 2 }}
-            variant="fullWidth"
-            color="#3F3A3B"
-            flexItem
-          />
+              <Divider
+                orientation="vertical"
+                sx={{ borderRightWidth: 2, marginX: 2 }}
+                variant="fullWidth"
+                color="#3F3A3B"
+                flexItem
+              />
 
-          <Grid item>
-            <Select
-              disableUnderline
-              label="Month"
-              variant="standard"
-              sx={{ border: "none" }}
-              value={selectedMonth}
-              onChange={handleMonthChange}
-            >
-              {monthNames.map((month, index) => (
-                <MenuItem
-                  key={index + 1}
-                  value={(index + 1).toString().padStart(2, "0")}
+              <Grid item>
+                <Select
+                  disableUnderline
+                  label="Month"
+                  variant="standard"
+                  sx={{ border: "none" }}
+                  value={selectedMonth}
+                  onChange={handleMonthChange}
                 >
-                  {month.toUpperCase()}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
+                  {monthNames.map((month, index) => (
+                    <MenuItem
+                      key={index + 1}
+                      value={(index + 1).toString().padStart(2, "0")}
+                    >
+                      {month.toUpperCase().padStart(2, "0")}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
 
-          <Divider
-            orientation="vertical"
-            sx={{ borderRightWidth: 2, marginX: 2 }}
-            variant="fullWidth"
-            color="#3F3A3B"
-            flexItem
-          />
+              <Divider
+                orientation="vertical"
+                sx={{ borderRightWidth: 2, marginX: 2 }}
+                variant="fullWidth"
+                color="#3F3A3B"
+                flexItem
+              />
 
-          <Grid item>
-            <Select
-              disableUnderline
-              label="Year"
-              variant="standard"
-              sx={{ border: "none" }}
-              value={selectedYear}
-              onChange={handleYearChange}
-            >
-              {[...Array(10)].map((_, index) => (
-                <MenuItem key={index + 1} value={(2024 - index).toString()}>
-                  {(2024 - index).toString()}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
+              <Grid item>
+                <Select
+                  disableUnderline
+                  label="Year"
+                  variant="standard"
+                  sx={{ border: "none" }}
+                  value={selectedYear}
+                  onChange={handleYearChange}
+                >
+                  {[...Array(10)].map((_, index) => (
+                    <MenuItem key={index + 1} value={(2024 - index).toString()}>
+                      {(2024 - index).toString()}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+            </>
+          )}
 
           <Divider
             orientation="vertical"

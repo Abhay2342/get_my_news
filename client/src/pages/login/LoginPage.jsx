@@ -49,25 +49,33 @@ const LoginPage = () => {
     try {
       setLoading(true);
 
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "https://get-my-news-server.onrender.com/login",
+        // "http://localhost:3000/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
       if (response.ok) {
         const userData = await response.json();
 
         // Update user context with email and other user data
         // loginUser(userData);
-        // console.log(userData);
+        // console.log(userData[0]);
         // console.log(JSON.stringify(userData));
-        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("user", JSON.stringify(userData[0]));
+        localStorage.setItem(
+          "userCollection",
+          JSON.stringify(userData[1].collection)
+        );
         localStorage.setItem("isLoggedIn", "true");
 
         setLoading(false);
