@@ -10,6 +10,7 @@ import {
 } from "./pages/settings/SettingsPage";
 import "./App.css";
 import ContactUs from "./pages/contact_us/ContactUs";
+import CollectionPage from "./pages/collection/CollectionPage";
 function App() {
   return (
     <Router>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/collection" element={<CollectionPage />} />
         <Route
           path="/profile-settings"
           element={<SettingsPage path={"PROFILE"} />}
