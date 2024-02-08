@@ -139,15 +139,18 @@ const addNews = async (req, res) => {
 };
 
 
-const getNews = async (req, res) => {
-    let { newsArticle, email } = req.body;
+const addNotes = async (req, res) => {
+    let { email,data, id } = req.body;
 
     const collection = db.collection("collection");
 
     try {
         // Check if the user already exists
         const UserCollection = await collection.findOne({ email });
-
+        await collection.updateOne(
+            { email: uname },
+            { $set: { name: name, email: email, gender: gender, age: age } }
+        );
         // if (existingUser) {
         //     res.status(400).send("User already exists");
         //     return;
@@ -169,6 +172,7 @@ const getNews = async (req, res) => {
 
 export default {
     addNews,
+    addNotes,
     GET,
     UPDATE,
     PATCH,

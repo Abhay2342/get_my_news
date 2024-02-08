@@ -65,6 +65,10 @@ app.get("/user/uname/collection", (req, res) => {
     user.getNews(req, res);
 });
 
+app.put("/user/uname/collection/notes", (req, res) => {
+    user.addNotes(req, res);
+});
+
 app.listen(port, () => {
     console.log(`app is on port ${port}`);
 });

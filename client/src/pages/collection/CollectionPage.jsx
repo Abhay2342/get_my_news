@@ -50,17 +50,35 @@ const newsArticles = {
 const CollectionPage = () => {
   // const [selectedItem, setSelectedItem] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [userCollection, setUserCollection] = useState(
+    JSON.parse(localStorage.getItem("userCollection")) || []
+  );
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn")
+  );
 
   const handleArticleClick = (article) => {
     console.log(article);
     setSelectedArticle(article);
   };
 
+  const handleNotesSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const formObject = {};
+    formData.forEach((value, key) => {
+      formObject[key] = value;
+    });
+    console.log();
+    console.log(selectedArticle);
+  };
+
   useEffect(() => {
     // Set the default selected item to the first item
     // setSelectedItem("All");
     // Set the default selected article to the first article
-    setSelectedArticle(newsArticles.news[0]);
+    setSelectedArticle(userCollection[0]);
   }, []);
 
   return (
@@ -79,8 +97,9 @@ const CollectionPage = () => {
           >
             Articles List
           </Typography>
+
           <NewsArticleList
-            newsArticles={newsArticles.news}
+            newsArticles={userCollection}
             handleArticleClick={handleArticleClick}
             selectedArticle={selectedArticle}
           />
@@ -97,7 +116,7 @@ const CollectionPage = () => {
         <Grid item xs={5}>
           <SelectedArticle
             selectedArticle={selectedArticle}
-            // isLoggedIn={isLoggedIn}
+            isLoggedIn={isLoggedIn}
             ContentHeight={"90vh"}
           />
         </Grid>
@@ -111,7 +130,7 @@ const CollectionPage = () => {
         />
 
         <Grid item xs={3}>
-          <form action="">
+          <form onSubmit={handleNotesSubmit}>
             <Typography
               sx={{
                 textAlign: "center",
@@ -130,7 +149,7 @@ const CollectionPage = () => {
                 boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
                 border: 1,
               }}
-              name="desc"
+              name="notes"
               fullWidth
               label=""
               variant="outlined"
