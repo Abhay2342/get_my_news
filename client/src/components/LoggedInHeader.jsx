@@ -26,7 +26,7 @@ const LoggedInHeader = () => {
   };
 
   const handleCollectionClick = () => {
-    navigate("/"); // Navigate to /login route using useNavigate
+    navigate("/collection"); // Navigate to /login route using useNavigate
   };
 
   const handleContactUsClick = () => {
@@ -40,6 +40,9 @@ const LoggedInHeader = () => {
     navigate("/");
   };
 
+  const handleSettingsClick = () => {
+    navigate("/profile-settings");
+  };
   return (
     <AppBar
       position="static"
@@ -84,6 +87,18 @@ const LoggedInHeader = () => {
           <Grid item>
             <Button variant="link" onClick={handleCollectionClick}>
               Collection
+            </Button>
+          </Grid>
+          <Divider
+            orientation="vertical"
+            sx={{ borderRightWidth: 2, marginX: 3 }}
+            variant="fullWidth"
+            color="#3F3A3B"
+            flexItem
+          />
+          <Grid item>
+            <Button variant="link" onClick={handleSettingsClick}>
+              Settings
             </Button>
           </Grid>
           <Divider

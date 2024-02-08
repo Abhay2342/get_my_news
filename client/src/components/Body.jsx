@@ -138,6 +138,7 @@ const Body = ({ newsData, setNewsData, isLoggedIn }) => {
         <SelectedArticle
           selectedArticle={selectedArticle}
           isLoggedIn={isLoggedIn}
+          ContentHeight={"80vh"}
         />
       </Grid>
       <Divider

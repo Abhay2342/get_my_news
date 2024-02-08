@@ -1,6 +1,6 @@
 /* src/global.css */
 
-
+img {filter: grayscale(100%);}
 
 /* Example: Check for existing HTML or body styles */
 

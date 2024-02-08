@@ -3,7 +3,7 @@ import { Typography, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-const SelectedArticle = ({ selectedArticle, isLoggedIn }) => {
+const SelectedArticle = ({ selectedArticle, isLoggedIn, ContentHeight }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [userCollection, setUserCollection] = useState(
     JSON.parse(localStorage.getItem("userCollection")) || []
@@ -30,7 +30,7 @@ const SelectedArticle = ({ selectedArticle, isLoggedIn }) => {
       // setLoading(true);
       console.log("Category Search");
       const response = await fetch(
-        `http://localhost:3000/user/uname/collection`,
+        `https://get-my-news-server.onrender.com/user/uname/collection`,
         {
           method: "PUT",
           headers: {
@@ -75,7 +75,7 @@ const SelectedArticle = ({ selectedArticle, isLoggedIn }) => {
   }
 
   return (
-    <div style={{ padding: "20px", height: "80vh", overflowY: "auto" }}>
+    <div style={{ padding: "20px", height: ContentHeight, overflowY: "auto" }}>
       <img
         src={selectedArticle.image}
         alt={selectedArticle.title}
