@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Typography, IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
+import temp_img from "../assets/coming_soon.png";
 const SelectedArticle = ({ selectedArticle, isLoggedIn, ContentHeight }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [userCollection, setUserCollection] = useState(
@@ -81,8 +81,9 @@ const SelectedArticle = ({ selectedArticle, isLoggedIn, ContentHeight }) => {
   return (
     <div style={{ padding: "20px", height: ContentHeight, overflowY: "auto" }}>
       <img
-        src={selectedArticle.image}
-        alt={selectedArticle.title}
+        src={selectedArticle.image || temp_img}
+        // alt={selectedArticle.title}
+        className="img"
         style={{
           width: "100%",
           height: "218px",

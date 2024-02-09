@@ -71,7 +71,7 @@ const HomePage = () => {
         setNewsData={setNewsData}
         userData={userData}
       />
-      <CountryCarousel />
+      <CountryCarousel setNewsData={setNewsData} />
       <Body
         newsData={newsData}
         setNewsData={setNewsData}

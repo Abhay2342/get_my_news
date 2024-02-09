@@ -4,29 +4,25 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const itemsPerPage = 5;
-
-const CountryCarousel = ({}) => {
-  const countries = [
-    "USA",
-    "Canada",
-    "UK",
-    "Germany",
-    "America",
-    "New York",
-    "France",
-    "Japan",
-    "Australia",
-    "India",
-    "China",
-    "Brazil",
-    "London",
-  ];
-
+const countries = {
+  USA: "US",
+  Canada: "CA",
+  UK: "GB",
+  Germany: "DE",
+  America: "US", // Assuming "America" refers to the United States
+  France: "FR",
+  Japan: "JP",
+  Australia: "AU",
+  India: "IN",
+  China: "CN",
+  Brazil: "BR",
+};
+const CountryCarousel = ({ setNewsData }) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const containerRef = useRef(null);
 
-  const totalItems = countries.length;
+  const totalItems = Object.keys(countries).length;
 
   const handlePrevPage = () => {
     setCurrentOffset((prevOffset) => Math.max(0, prevOffset - itemsPerPage));
@@ -38,12 +34,48 @@ const CountryCarousel = ({}) => {
     );
   };
 
-  const handleCountryClick = (country) => {
-    console.log(country);
+  const handleCountryClick = async (country) => {
     setSelectedCountry(country);
+    console.log(country);
+    try {
+      // setLoading(true);
+      console.log("Query Search");
+      const response = await fetch(
+        `https://get-my-news-server.onrender.com/news/country/${countries[
+          country
+        ].toLowerCase()}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const newsData = await response.json();
+
+        // Update user context with email and other user data
+        // loginUser(userData);
+        setNewsData(newsData);
+        console.log(newsData);
+        // console.log(JSON.stringify(userData));
+        // localStorage.setItem("user", JSON.stringify(userData));
+        // localStorage.setItem("isLoggedIn", "true");
+
+        // setLoading(false);
+        // navigate("/profile-settings");
+      } else {
+        console.error("News Failed");
+        // setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error during News:", error);
+      // setLoading(false);
+    }
   };
 
-  const countryCards = countries.map((country, index) => (
+  const countryCards = Object.keys(countries).map((country, index) => (
     <Typography
       key={index}
       variant="h4"
