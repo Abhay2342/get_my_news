@@ -49,17 +49,23 @@ const newsArticles = {
 
 const CollectionPage = () => {
   // const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedArticle, setSelectedArticle] = useState(null);
-  const [userCollection, setUserCollection] = useState(
+  let [selectedArticle, setSelectedArticle] = useState(null || []);
+  let [userCollection, setUserCollection] = useState(
     JSON.parse(localStorage.getItem("userCollection")) || []
   );
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn")
   );
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+
+  const [userNotes, setUserNotes] = useState(null);
 
   const handleArticleClick = (article) => {
     console.log(article);
     setSelectedArticle(article);
+    setUserNotes(article.notes);
   };
 
   const handleNotesSubmit = async (event) => {
@@ -70,14 +76,55 @@ const CollectionPage = () => {
     formData.forEach((value, key) => {
       formObject[key] = value;
     });
-    console.log();
-    console.log(selectedArticle);
+
+    // setSelectedArticle(selectedArticle);
+
+    try {
+      // setLoading(true);
+      console.log("Category Search");
+      const response = await fetch(
+        `http://localhost:3000/user/uname/collection/notes`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: userData.email,
+            selectedArticle: selectedArticle,
+            notes: formObject,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const newData = await response.json();
+
+        localStorage.setItem(
+          "userCollection",
+          JSON.stringify(newData.collection)
+        );
+        setUserCollection(JSON.parse(localStorage.getItem("userCollection")));
+        // setUserNotes();
+        // localStorage.setItem("isLoggedIn", "true");
+        window.location.reload(false);
+        // setLoading(false);
+        // navigate("/profile-settings");
+      } else {
+        console.error("News Failed");
+        // setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error during News:", error);
+      // setLoading(false);
+    }
   };
 
   useEffect(() => {
     // Set the default selected item to the first item
     // setSelectedItem("All");
     // Set the default selected article to the first article
+    // setUserNotes(selectedArticle.notes || null);
     setSelectedArticle(userCollection[0]);
   }, []);
 
@@ -151,6 +198,7 @@ const CollectionPage = () => {
               }}
               name="notes"
               fullWidth
+              defaultValue={selectedArticle.notes}
               label=""
               variant="outlined"
               multiline

@@ -140,30 +140,28 @@ const addNews = async (req, res) => {
 
 
 const addNotes = async (req, res) => {
-    let { email,data, id } = req.body;
+    let { selectedArticle, notes, email } = req.body;
 
     const collection = db.collection("collection");
 
     try {
         // Check if the user already exists
-        const UserCollection = await collection.findOne({ email });
-        await collection.updateOne(
-            { email: uname },
-            { $set: { name: name, email: email, gender: gender, age: age } }
-        );
-        // if (existingUser) {
-        //     res.status(400).send("User already exists");
-        //     return;
-        // }
+        const existingEntry = await collection.findOne({
+            email: email,
+            collection: selectedArticle
+        });
 
-        // Hash the password before storing it
-        // const hashedPassword = await bcrypt.hash(password, 10);
+            await collection.updateOne({ email: email },
+                { $pull: { collection: selectedArticle } });
 
-        // Insert the new user with the hashed password
-        // await collection.updateOne({ email: email },
-            // { $push: { collection: newsArticle } });
+                selectedArticle["notes"] = notes.notes
+            await collection.updateOne({ email: email },
+                { $push: { collection: selectedArticle } });
 
-        res.status(201).send(UserCollection);
+        // Fetch the updated data
+        const newData = await collection.findOne({ email });
+
+        res.status(201).send(newData);
     } catch (error) {
         console.error("Error during addition:", error);
         res.status(500).send("Internal Server Error");

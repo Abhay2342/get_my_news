@@ -25,6 +25,10 @@ const SelectedArticle = ({ selectedArticle, isLoggedIn, ContentHeight }) => {
 
   const handleLikeButton = async () => {
     setIsLiked(!isLiked);
+    if (selectedArticle["notes"]) {
+    } else {
+      selectedArticle["notes"] = "";
+    }
 
     try {
       // setLoading(true);
