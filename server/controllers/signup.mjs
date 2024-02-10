@@ -5,6 +5,7 @@ const signup = async (req, res) => {
     let { uname, fname, lname, email, password } = req.body;
 
     const collection = db.collection("users");
+    const likedArticles = db.collection("collection")
 
     try {
         // Check if the user already exists
@@ -29,6 +30,10 @@ const signup = async (req, res) => {
             about: null,
             apikey: null, 
             avatar: null });
+
+            await likedArticles.insertOne({ email,
+            collection: []
+            });
 
         res.status(201).send("User created");
     } catch (error) {

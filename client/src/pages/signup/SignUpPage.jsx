@@ -14,7 +14,8 @@ import GoogleIcon from "../../assets/google.svg";
 import TwitterIcon from "../../assets/twitter.svg";
 import LinkedInIcon from "../../assets/linkedin.svg";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { useState } from "react";
+import { CircularProgress } from "@mui/material";
 const SignUpPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [loading, setLoading] = useState(false);
