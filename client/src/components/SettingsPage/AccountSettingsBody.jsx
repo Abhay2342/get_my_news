@@ -26,7 +26,7 @@ const AccountSettingsBody = ({}) => {
     console.log(formData);
     try {
       const response = await fetch(
-        `http://localhost:3000/user/update/${userData.uname}`,
+        `https://get-my-news-server.onrender.com/user/update/${userData.uname}`,
         {
           method: "PATCH",
           headers: {

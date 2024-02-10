@@ -26,7 +26,7 @@ const ProfileSettingsBody = ({}) => {
     console.log(formData);
     try {
       const response = await fetch(
-        "http://localhost:3000//user/update/:uname",
+        "https://get-my-news-server.onrender.com/user/update/:uname",
         {
           method: "PUT",
           headers: {

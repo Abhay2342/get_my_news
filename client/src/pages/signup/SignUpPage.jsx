@@ -14,10 +14,11 @@ import GoogleIcon from "../../assets/google.svg";
 import TwitterIcon from "../../assets/twitter.svg";
 import LinkedInIcon from "../../assets/linkedin.svg";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { useState } from "react";
+import { CircularProgress } from "@mui/material";
 const SignUpPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate
-
+  const [loading, setLoading] = useState(false);
   const handleLoginClick = () => {
     navigate("/login");
   };
@@ -36,6 +37,7 @@ const SignUpPage = () => {
     });
 
     try {
+      setLoading(true);
       const response = await fetch(
         "https://get-my-news-server.onrender.com/signup",
         // "http://localhost:3000/signup",
@@ -53,15 +55,18 @@ const SignUpPage = () => {
       if (response.ok) {
         // Handle successful sign-up, e.g., redirect to a confirmation page
         console.log("User Created");
+        setLoading(false);
         navigate("/login");
       } else {
         // Handle unsuccessful sign-up, show an error message, etc.
         console.error("Sign Up failed");
         let data = await response.text();
         console.log(data);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error during Sign Up:", error);
+      setLoading(false);
     }
   };
 
@@ -237,7 +242,11 @@ const SignUpPage = () => {
                       border: "12px",
                     }}
                   >
-                    SIGN UP
+                    {loading ? (
+                      <CircularProgress size={24} color="inherit" />
+                    ) : (
+                      "SignUP"
+                    )}
                   </Button>
                 </Grid>
                 <Grid item xs={6}>
