@@ -20,22 +20,21 @@ const CollectionPage = () => {
   );
 
   const [userNotes, setUserNotes] = useState(null);
+  const [newNotes, setNewNotes] = useState(null);
 
-  const handleArticleClick = (article) => {
-    console.log(article);
+  const handleNotesChange = (content) => {
+    setNewNotes(content);
+  };
+
+  const handleArticleClick = async (article) => {
+    // console.log(article);
     setSelectedArticle(article);
     setUserNotes(article.notes);
   };
 
   const handleNotesSubmit = async (event) => {
     event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const formObject = {};
-    formData.forEach((value, key) => {
-      formObject[key] = value;
-    });
-
+    console.log(newNotes);
     // setSelectedArticle(selectedArticle);
 
     try {
@@ -51,7 +50,7 @@ const CollectionPage = () => {
           body: JSON.stringify({
             email: userData.email,
             selectedArticle: selectedArticle,
-            notes: formObject,
+            notes: { notes: newNotes },
           }),
         }
       );
@@ -66,7 +65,7 @@ const CollectionPage = () => {
         setUserCollection(JSON.parse(localStorage.getItem("userCollection")));
         // setUserNotes();
         // localStorage.setItem("isLoggedIn", "true");
-        window.location.reload(false);
+        // window.location.reload(false);
         // setLoading(false);
         // navigate("/profile-settings");
       } else {
@@ -80,10 +79,6 @@ const CollectionPage = () => {
   };
 
   useEffect(() => {
-    // Set the default selected item to the first item
-    // setSelectedItem("All");
-    // Set the default selected article to the first article
-    // setUserNotes(selectedArticle.notes || null);
     setSelectedArticle(userCollection[0]);
   }, []);
 
@@ -137,33 +132,11 @@ const CollectionPage = () => {
 
         <Grid item xs={3}>
           <form onSubmit={handleNotesSubmit}>
-            <Typography
-              sx={{
-                textAlign: "center",
-                fontSize: "2rem",
-                fontWeight: "700",
-                fontFamily: "Inika",
-              }}
-              paddingY={1}
-            >
-              Take Notes
-            </Typography>
-            <TextField
-              sx={{
-                // background: "#FFFFFF",
-                margin: "0px 0px",
-                boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
-                border: 1,
-              }}
-              name="notes"
-              fullWidth
-              defaultValue={selectedArticle.notes}
-              label=""
-              variant="outlined"
-              multiline
-              margin="normal"
-              type="text"
-              rows={22}
+            {/* Replace TextField with TextEditor */}
+            <TextEditor
+              // handleProcedureContentChange={handleNotesSubmit}
+              userNotes={userNotes}
+              handleNotesChange={handleNotesChange}
             />
             <Button
               variant="contained"

@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
+import { Typography } from "@mui/material";
 
-const TextEditor = () => {
+const TextEditor = ({ userNotes, handleNotesChange }) => {
+  const [key, setKey] = useState(0); // Initialize key state
+
+  useEffect(() => {
+    // Update the key whenever userNotes changes
+    setKey((prevKey) => prevKey + 1);
+  }, [userNotes]);
+
   var modules = {
     toolbar: [
       [{ size: ["small", false, "large", "huge"] }],
@@ -79,21 +87,28 @@ const TextEditor = () => {
     "size",
   ];
 
-  const handleProcedureContentChange = (content) => {
-    console.log("content---->", content);
-  };
-
   return (
-    <div>
-      <h1 style={{ textAlign: "center" }}>Text Editor In React JS</h1>
+    <div key={key}>
+      <Typography
+        sx={{
+          textAlign: "center",
+          fontSize: "2rem",
+          fontWeight: "700",
+          fontFamily: "Inika",
+        }}
+        paddingY={1}
+      >
+        Take Notes
+      </Typography>
       <div style={{ display: "grid", justifyContent: "center" }}>
         <ReactQuill
           theme="snow"
           modules={modules}
           formats={formats}
           placeholder="write your content ...."
-          onChange={handleProcedureContentChange}
+          onChange={handleNotesChange}
           style={{ height: "220px" }}
+          defaultValue={userNotes}
         ></ReactQuill>
       </div>
     </div>
