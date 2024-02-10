@@ -8,7 +8,7 @@ const signup = async (req, res) => {
 
     try {
         // Check if the user already exists
-        const existingUser = await collection.findOne({ uname });
+        const existingUser = await collection.findOne({ email });
 
         if (existingUser) {
             res.status(400).send("User already exists");
