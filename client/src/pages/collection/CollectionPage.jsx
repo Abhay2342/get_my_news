@@ -4,63 +4,82 @@ import LoggedInHeader from "../../components/LoggedInHeader";
 import { Grid, Divider, Typography, TextField, Button } from "@mui/material";
 import NewsArticleList from "../../components/NewsArticleList";
 import SelectedArticle from "../../components/SelectedArticle";
-import img1 from "../../assets/article1.png";
-import img2 from "../../assets/article2.png";
-import img3 from "../../assets/article3.png";
-const newsArticles = {
-  news: [
-    {
-      image: img1,
-      title: "ECONOMIC CRISIS ON PEAK",
-      publish_date: "24-05-2023",
-      text: `In recent times, the world has witnessed an alarming surge in economic crises, pushing nations to the brink of financial instability. The term "economic crisis" refers to a severe and sustained downturn in the economic performance of a country, characterized by a contraction in economic activity, rising unemployment rates, and financial distress across various sectors. This article delves into the factors contributing to the current economic crisis, its widespread implications, and potential strategies for recovery.
-
-    Causes of the Economic Crisis:
-    Several factors can contribute to the escalation of an economic crisis. These may include:
-    
- `,
-    },
-    {
-      image: img2,
-      title: "BLACK LIFE UNTOLD STORIES",
-      publish_date: "19-02-2020",
-      text: "Black Lives Matter is a movement advocating for the rights and equality of Black individuals, challenging systemic racism and injustice.",
-    },
-    {
-      image: img3,
-      title: "SUDDEN RISE IN CYBER CRIME",
-      publish_date: "19-02-2020",
-      text: "The surge in cybercrime demands heightened security and increased public awareness to combat unauth access, data breaches, and online fraud.",
-    },
-    {
-      image: img3,
-      title: "SUDDEN RISE IN CYBER CRIME",
-      publish_date: "19-02-2020",
-      text: "The surge in cybercrime demands heightened security and increased public awareness to combat unauth access, data breaches, and online fraud.",
-    },
-    {
-      image: img3,
-      title: "SUDDEN RISE IN CYBER CRIME",
-      publish_date: "19-02-2020",
-      text: "The surge in cybercrime demands heightened security and increased public awareness to combat unauth access, data breaches, and online fraud.",
-    },
-  ],
-};
+import TextEditor from "../../components/TextEditor";
 
 const CollectionPage = () => {
   // const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedArticle, setSelectedArticle] = useState(null);
+  let [selectedArticle, setSelectedArticle] = useState(null || []);
+  let [userCollection, setUserCollection] = useState(
+    JSON.parse(localStorage.getItem("userCollection")) || []
+  );
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn")
+  );
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
 
-  const handleArticleClick = (article) => {
-    console.log(article);
+  const [userNotes, setUserNotes] = useState(null);
+  const [newNotes, setNewNotes] = useState(null);
+
+  const handleNotesChange = (content) => {
+    setNewNotes(content);
+  };
+
+  const handleArticleClick = async (article) => {
+    // console.log(article);
     setSelectedArticle(article);
+    setUserNotes(article.notes);
+  };
+
+  const handleNotesSubmit = async (event) => {
+    event.preventDefault();
+    console.log(newNotes);
+    // setSelectedArticle(selectedArticle);
+
+    try {
+      // setLoading(true);
+      console.log("Category Search");
+      const response = await fetch(
+        `https://get-my-news-server.onrender.com/user/uname/collection/notes`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: userData.email,
+            selectedArticle: selectedArticle,
+            notes: { notes: newNotes },
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const newData = await response.json();
+
+        localStorage.setItem(
+          "userCollection",
+          JSON.stringify(newData.collection)
+        );
+        setUserCollection(JSON.parse(localStorage.getItem("userCollection")));
+        // setUserNotes();
+        // localStorage.setItem("isLoggedIn", "true");
+        // window.location.reload(false);
+        // setLoading(false);
+        // navigate("/profile-settings");
+      } else {
+        console.error("News Failed");
+        // setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error during News:", error);
+      // setLoading(false);
+    }
   };
 
   useEffect(() => {
-    // Set the default selected item to the first item
-    // setSelectedItem("All");
-    // Set the default selected article to the first article
-    setSelectedArticle(newsArticles.news[0]);
+    setSelectedArticle(userCollection[0]);
   }, []);
 
   return (
@@ -79,8 +98,9 @@ const CollectionPage = () => {
           >
             Articles List
           </Typography>
+
           <NewsArticleList
-            newsArticles={newsArticles.news}
+            newsArticles={userCollection}
             handleArticleClick={handleArticleClick}
             selectedArticle={selectedArticle}
           />
@@ -97,7 +117,7 @@ const CollectionPage = () => {
         <Grid item xs={5}>
           <SelectedArticle
             selectedArticle={selectedArticle}
-            // isLoggedIn={isLoggedIn}
+            isLoggedIn={isLoggedIn}
             ContentHeight={"90vh"}
           />
         </Grid>
@@ -111,33 +131,12 @@ const CollectionPage = () => {
         />
 
         <Grid item xs={3}>
-          <form action="">
-            <Typography
-              sx={{
-                textAlign: "center",
-                fontSize: "2rem",
-                fontWeight: "700",
-                fontFamily: "Inika",
-              }}
-              paddingY={1}
-            >
-              Take Notes
-            </Typography>
-            <TextField
-              sx={{
-                // background: "#FFFFFF",
-                margin: "0px 0px",
-                boxShadow: "3px 3px 0px rgba(0, 0, 0, 0.25)",
-                border: 1,
-              }}
-              name="desc"
-              fullWidth
-              label=""
-              variant="outlined"
-              multiline
-              margin="normal"
-              type="text"
-              rows={22}
+          <form onSubmit={handleNotesSubmit}>
+            {/* Replace TextField with TextEditor */}
+            <TextEditor
+              // handleProcedureContentChange={handleNotesSubmit}
+              userNotes={userNotes}
+              handleNotesChange={handleNotesChange}
             />
             <Button
               variant="contained"

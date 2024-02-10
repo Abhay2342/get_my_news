@@ -3,6 +3,7 @@ import React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
+import temp_img from "../assets/coming_soon.png";
 
 const NewsArticleList = ({
   newsArticles,
@@ -24,8 +25,9 @@ const NewsArticleList = ({
             >
               {/* Article Image */}
               <img
-                src={article.image}
-                alt={`Article ${index + 1}`}
+                src={article.image || temp_img}
+                className="img"
+                // alt={`Article ${index + 1}`}
                 style={{ width: "158px", height: "118px", marginRight: "10px" }}
               />
 

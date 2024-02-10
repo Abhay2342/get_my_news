@@ -99,9 +99,44 @@ const HorizontalBar = ({ isLoggedIn, setNewsData, userData }) => {
     }
   };
 
-  const handleSearchClick = () => {
+  const handleSearchClick = async () => {
     if (isSearchBarVisible && searchInput != "") {
       console.log(searchInput);
+
+      try {
+        // setLoading(true);
+        console.log("Query Search");
+        const response = await fetch(
+          `https://get-my-news-server.onrender.com/news/text/${searchInput}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          const newsData = await response.json();
+
+          // Update user context with email and other user data
+          // loginUser(userData);
+          setNewsData(newsData);
+          console.log(newsData);
+          // console.log(JSON.stringify(userData));
+          // localStorage.setItem("user", JSON.stringify(userData));
+          // localStorage.setItem("isLoggedIn", "true");
+
+          // setLoading(false);
+          // navigate("/profile-settings");
+        } else {
+          console.error("News Failed");
+          // setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error during News:", error);
+        // setLoading(false);
+      }
     }
     setSearchBarVisibility(!isSearchBarVisible);
   };
@@ -179,8 +214,10 @@ const HorizontalBar = ({ isLoggedIn, setNewsData, userData }) => {
           {/* Add loading spinner and text */}
           {loading ? (
             <Grid item>
-              <CircularProgress size={24} />
-              <Typography variant="caption">Please wait...</Typography>
+              <CircularProgress size={20} />
+              <Typography variant="filter" alignSelf={"center"} paddingLeft={2}>
+                Please wait...
+              </Typography>
             </Grid>
           ) : (
             <>

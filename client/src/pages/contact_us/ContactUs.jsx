@@ -32,13 +32,16 @@ const ContactUs = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:3000/support", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formObject),
-      });
+      const response = await fetch(
+        "https://get-my-news-server.onrender.com/support",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formObject),
+        }
+      );
 
       console.log("Support response:", response);
 
