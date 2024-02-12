@@ -1,27 +1,50 @@
-# GET MY NEWS - FRONTEND
-Our frontend is meticulously crafted with **React** and **Vite**, offering a seamless development experience with blazing-fast performance and Hot Module Replacement for rapid iteration. Elevating the user interface, we've integrated Material-UI components, ensuring a polished and responsive design that enhances the overall browsing experience.
+# GET MY NEWS - BACKEND
+
+Our backend is powered by **ExpressJS**, ensuring robust server-side logic and routing. We prioritize security by utilizing bcrypt to hash and securely store passwords in **MongoDB**. We seamlessly integrate with the **WorldNewAPI** to collect news data and offer features for users to modify their profile information securely.
+
+## Features
+
+- **Authentication System**: Securely stores user credentials in MongoDB, ensuring data integrity.
+- **Integration with WorldNewAPI**: Collects real-time news data to provide personalized news updates.
+- **User Profile Management**: Enables users to modify their profile information, including name, email, password, and profile picture.
 
 ## PRE-REQUISITES
+
 ### Install Node Package Manager
+
 Install [NodeJs](https://nodejs.org/en/download)
 
 ### Cloning & Running in Local
+
 Clone the repository:
+
 ```bash
 git clone https://github.com/Abhay2342/get_my_news
 ```
+
 Navigate to the frontend directory:
+
 ```bash
-cd get_my_news/client
+cd get_my_news/server
 ```
+
 Install dependencies:
+
 ```bash
 npm install
 ```
+
 Start Development Server:
+
 ```bash
-npm run dev
+npm start
 ```
+
+> [!IMPORTANT]  
+> For local testing, create .env file in `/get_my_news/server` and create 3 variable
+> NEWS_API = `NEWS_API`
+> ATLAS_URI = `mongodb+srv://<username>:<password>@username-cluster.xyz.mongodb.net/`
+> PORT = `3000`
 
 ## Ways to contribute
 
