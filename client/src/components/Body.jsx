@@ -57,13 +57,13 @@ const Body = ({ newsData, setNewsData, isLoggedIn }) => {
 
   useEffect(() => {
     // Set the default selected item to the first item
-    setSelectedItem("LATEST NEWS");
+    setSelectedItem("ALL");
     // Set the default selected article to the first article
     setSelectedArticle(newsData.news[0]);
   }, []);
 
   useEffect(() => {
-    if (selectedItem !== null) {
+    if (selectedItem !== null && selectedItem !== "ALL") {
       const fetchData = async () => {
         try {
           setLoadingCategory(true);

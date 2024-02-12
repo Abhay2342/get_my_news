@@ -12,6 +12,7 @@ const CategoryList = ({
   loadingCategory,
 }) => {
   const categories = [
+    "ALL",
     "LATEST NEWS",
     "OPINION",
     "SPORTS",
