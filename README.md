@@ -1,4 +1,4 @@
-<p align="center"><img src="./static/img/live-cc-generator.png" height="100"></p>
+<p align="center"><img src="./logo.png" height="100"></p>
 <h1 align="center">⚡Get My News⚡</h1>
 <p align="center">
     <a href="https://get-my-news.vercel.app/"><strong>Get My News »</strong></a>
@@ -26,6 +26,7 @@ Welcome to <b>GET MY NEWS</b>, a MERN stack web application designed to deliver 
 </p>
 
 ## Features
+
 - **User Authentication**: Secure login and signup functionality to ensure user data integrity.
 - **Personalized News Fetching**: Customized news updates based on user preferences and browsing history.
 - **Liked Articles Collection**: Users can save their favorite articles for later viewing.
@@ -36,6 +37,7 @@ Welcome to <b>GET MY NEWS</b>, a MERN stack web application designed to deliver 
 - **Multiple Languages Support**: Enjoy news updates in multiple languages for a global perspective.
 
 ## Technologies Used
+
 - **MongoDB**: Database for storing user information and news data.
 - **Express.js**: Backend framework for handling server-side logic and routing.
 - **React.js**: Frontend library for building interactive user interfaces.
@@ -63,7 +65,8 @@ Please refer to the project's style and contribution guidelines for submitting p
 6. **Rebase** your branch with the master branch
 7. Submit your **Pull Request** so that we can review it
 
-Please submit your issues and pull requests while following the automated template. During the contributing phase abide by the [Contributing Guidelines](https://github.com/Abhay2342/live_cc_generator/blob/master/CONTRIBUTING.md).
+Please submit your issues and pull requests while following the automated template. During the contributing phase abide by the [Contributing Guidelines](https://github.com/Abhay2342/get_my_news/blob/master/CONTRIBUTING.md).
 
 ## Contributors
+
 - [**Abhay Singh Suryawanshi**](https://github.com/Abhay2342/)
