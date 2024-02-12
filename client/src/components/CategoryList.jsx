@@ -5,9 +5,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Badge from "@mui/material/Badge";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const CategoryList = ({ newsData, selectedItem, handleCategoryClick }) => {
+const CategoryList = ({
+  newsData,
+  selectedItem,
+  handleCategoryClick,
+  loadingCategory,
+}) => {
   const categories = [
-    "All",
     "LATEST NEWS",
     "OPINION",
     "SPORTS",
@@ -20,12 +24,9 @@ const CategoryList = ({ newsData, selectedItem, handleCategoryClick }) => {
     "EDUCATION",
     "RELIGION",
   ];
-  const [loadingCategory, setLoadingCategory] = useState(false);
 
   const handleCategoryItemClick = async (category) => {
-    setLoadingCategory(true);
-    await handleCategoryClick(category);
-    setLoadingCategory(false);
+    handleCategoryClick(category);
   };
 
   return (
