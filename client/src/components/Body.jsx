@@ -40,49 +40,14 @@ const newsArticles = {
 const Body = ({ newsData, setNewsData, isLoggedIn }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [loadingCategory, setLoadingCategory] = useState(false);
   if (newsData === null) {
     newsData = newsArticles;
   }
+
   const handleCategoryClick = async (item) => {
     console.log(item);
     setSelectedItem(item);
-
-    try {
-      // setLoading(true);
-      console.log("Category Search");
-      const response = await fetch(
-        `https://get-my-news-server.onrender.com/news/category/${selectedItem}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
-        const newsData = await response.json();
-
-        // Update user context with email and other user data
-        // loginUser(userData);
-        setNewsData(newsData);
-        console.log(newsData);
-        // console.log(JSON.stringify(userData));
-        // localStorage.setItem("user", JSON.stringify(userData));
-        // localStorage.setItem("isLoggedIn", "true");
-
-        // setLoading(false);
-        // navigate("/profile-settings");
-      } else {
-        console.error("News Failed");
-        // setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error during News:", error);
-      // setLoading(false);
-    }
-    // Reset selected article when a new category is clicked
-    setSelectedArticle(newsData.news[0]);
   };
 
   const handleArticleClick = (article) => {
@@ -92,10 +57,44 @@ const Body = ({ newsData, setNewsData, isLoggedIn }) => {
 
   useEffect(() => {
     // Set the default selected item to the first item
-    setSelectedItem("All");
+    setSelectedItem("ALL");
     // Set the default selected article to the first article
     setSelectedArticle(newsData.news[0]);
   }, []);
+
+  useEffect(() => {
+    if (selectedItem !== null && selectedItem !== "ALL") {
+      const fetchData = async () => {
+        try {
+          setLoadingCategory(true);
+          const response = await fetch(
+            `https://get-my-news-server.onrender.com/news/category/${selectedItem}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.ok) {
+            const newsData = await response.json();
+            setNewsData(newsData);
+            setSelectedArticle(newsData.news[0]);
+            setLoadingCategory(false);
+          } else {
+            console.error("Failed to fetch news");
+            setLoadingCategory(false);
+          }
+        } catch (error) {
+          console.error("Error during news fetch:", error);
+          setLoadingCategory(false);
+        }
+      };
+
+      fetchData();
+    }
+  }, [selectedItem, setNewsData]);
 
   return (
     <Grid
@@ -111,6 +110,7 @@ const Body = ({ newsData, setNewsData, isLoggedIn }) => {
           newsData={newsData}
           selectedItem={selectedItem}
           handleCategoryClick={handleCategoryClick}
+          loadingCategory={loadingCategory}
         />
       </Grid>
       <Divider
